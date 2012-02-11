@@ -30,7 +30,6 @@ library
 
   exposed-modules:
    Text.Hyphenation
-   Text.Hyphenation.English
 
   other-modules:
    Paths_hyphenation

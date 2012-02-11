@@ -3,7 +3,6 @@
 -- Module      :  Text.Hyphenation
 -- Copyright   :  (C) 2012 Edward Kmett,
 --                (C) 2007 Ned Batchelder
---                (C) 1990, 2004, 2005 Gerard D.C. Kuiken
 -- License     :  BSD-style (see the file LICENSE)
 --
 -- Maintainer  :  Edward Kmett <ekmett@gmail.com>
@@ -15,22 +14,27 @@
 ----------------------------------------------------------------------------
 module Text.Hyphenation
   (
-  -- * Extended API
+  -- * Hyphenate with a given set of patterns
     hyphenate
-  , readPatterns
+  -- * Pattern Files Support
+  , readHyphenationPatterns
+  -- ** Loading pattern Files from the installed data directory
+  , hyphenateLanguage
+  -- ** Supplied hyphenation pattern files
+  , hyphenateEnglish
+  , hyphenateFrench
+  , hyphenateIcelandic
   ) where
 
 import Control.Monad (forM_)
 import qualified Data.Vector.Unboxed as V
 import qualified Data.Vector.Unboxed.Mutable as MV
 import qualified Data.IntMap as IM
-import Data.Char (isSpace)
+import Data.Char (isSpace, toLower)
+import Paths_hyphenation
+import System.IO.Unsafe
 
 data Trie = Trie [Int] (IM.IntMap Trie)
-
-instance Show Trie where
-  showsPrec d (Trie xs ys) = showParen (d > 10) $
-    showString "Trie " . showsPrec 11 xs . showChar ' ' . showsPrec 11 (map (\(k,v) -> (toEnum k :: Char, v)) (IM.toList ys))
 
 insert :: String -> Trie -> Trie
 insert s0 = go (chars s0) where
@@ -95,11 +99,26 @@ hyphenate nf patterns = check where
             MV.write allpts j $ max x y
             put (j + 1) xs
 
-comment :: String -> Bool
-comment (x:xs) = x == '#' || (isSpace x && comment xs)
-comment _ = False
+content :: String -> Bool
+content (x:xs) = x /= '#' && not (isSpace x && content xs)
+content _ = True
 
-readPatterns :: String -> IO [String]
-readPatterns fn = do
-  content <- readFile fn
-  return $ filter (not . comment) (lines content) >>= words
+readHyphenationPatterns :: String -> IO [String]
+readHyphenationPatterns fn = do
+  body <- readFile fn
+  return $ filter content (lines body) >>= words
+
+hyphenateLanguage :: String -> IO (String -> [String])
+hyphenateLanguage language = do
+  src <- getDataFileName (language ++ ".hyp")
+  patterns <- readHyphenationPatterns src
+  return $ hyphenate toLower patterns
+
+hyphenateEnglish :: String -> [String]
+hyphenateEnglish = unsafePerformIO (hyphenateLanguage "en")
+
+hyphenateFrench :: String -> [String]
+hyphenateFrench = unsafePerformIO (hyphenateLanguage "fr")
+
+hyphenateIcelandic :: String -> [String]
+hyphenateIcelandic = unsafePerformIO (hyphenateLanguage "is")
