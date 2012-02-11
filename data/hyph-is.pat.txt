@@ -1,10 +1,3 @@
-# The Icelandic Plain TeX hyphenation tables as of June 30th, 1987.
-# These patterns may be freely copied.
-# Jorgen Pind, Institute of Lexicography, Univ. of Iceland,
-#   Reykjavik 101, Iceland
-# jorgen@lexis.hi.is (Internet)
-#
-# Modified to use unicode code points by Edward Kmett on February 10th, 2012
 .að3
 .aða4
 .aðk2
@@ -1542,7 +1535,7 @@ inav3í
 4iná
 4ind.
 in4ga
-ingj5arni
+ingj6arni
 4ingr
 ingv4
 2inns
@@ -4192,3 +4185,4 @@ zó4
 öt2v
 ötv3a
 ö5u
+þ6ó

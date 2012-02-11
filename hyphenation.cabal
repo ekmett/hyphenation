@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.1
+version:       0.2
 license:       BSD3
 cabal-version: >= 1.6
 license-file:  LICENSE
@@ -9,14 +9,17 @@ maintainer:    Edward A. Kmett <ekmett@gmail.com>
 stability:     provisional
 homepage:      http://github.com/ekmett/hyphenation
 copyright:     (C) 2012 Edward A. Kmett
-               (C) 2007 Ned Batchelder
-               (C) 1990, 2004, 2005 Gerard D.C. Kuiken
 synopsis:      Configurable Knuth-Liang hyphenation
-description:   Configurable Knuth-Liang hyphenation
+description:
+  Configurable Knuth-Liang hyphenation
+  .
+  Uses the UTF8 encoded hyphenation patterns provided by
+  hyph-utf8 from
+  <http://www.ctan.org/tex-archive/language/hyph-utf8>
 build-type:    Simple
 
 data-dir:      data
-data-files:    *.hyp
+data-files:    *.txt
 
 source-repository head
   type: git
@@ -24,12 +27,15 @@ source-repository head
 
 library
   build-depends:
-    base >= 4 && < 5,
-    containers >= 0.3.0.0 && < 0.5,
-    vector >= 0.9 && < 0.10
+    base                 >= 4 && < 5,
+    containers           >= 0.3.0.0 && < 0.5,
+    unordered-containers >= 0.1.4.6 && < 0.2
 
   exposed-modules:
    Text.Hyphenation
+   Text.Hyphenation.Exception
+   Text.Hyphenation.Language
+   Text.Hyphenation.Pattern
 
   other-modules:
    Paths_hyphenation

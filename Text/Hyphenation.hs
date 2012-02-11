@@ -15,138 +15,44 @@
 -- and simplified to remove the need for a manual exception list.
 ----------------------------------------------------------------------------
 module Text.Hyphenation
-  (
+  ( Hyphenator(..)
+  , hyphenationScore
   -- * Hyphenate with a given set of patterns
-    hyphenate
-  -- * Pattern file support
-  , readHyphenationPatternFile
-  -- ** Loading installed patterns
-  , hyphenateLanguage
-  -- ** Known patterns
-  , hyphenateEnglish
-  , hyphenateFrench
-  , hyphenateIcelandic
+  , hyphenate
+  , defaultLeftMin
+  , defaultRightMin
   ) where
 
-import Control.Monad (forM_)
-import qualified Data.Vector.Unboxed as V
-import qualified Data.Vector.Unboxed.Mutable as MV
-import qualified Data.IntMap as IM
-import Data.Char (isSpace, toLower)
-import Paths_hyphenation
-import System.IO.Unsafe
+import Text.Hyphenation.Pattern
+import Text.Hyphenation.Exception
 
-data Trie = Trie [Int] (IM.IntMap Trie)
+defaultLeftMin, defaultRightMin :: Int
+defaultLeftMin = 2
+defaultRightMin = 3
 
-insert :: String -> Trie -> Trie
-insert s0 = go (chars s0) where
-  go [] (Trie _ m) = Trie (points s0) m
-  go (x:xs) (Trie n m) = Trie n (IM.insertWith (\_ -> go xs) (fromEnum x) (mk xs) m)
+data Hyphenator = Hyphenator
+  { hyphenatorChars      :: Char -> Char
+  , hyphenatorPatterns   :: Patterns
+  , hyphenatorExceptions :: Exceptions
+  , hyphenatorLeftMin    :: {-# UNPACK #-} !Int
+  , hyphenatorRightMin   :: {-# UNPACK #-} !Int
+  }
 
-  mk []     = Trie (points s0) IM.empty
-  mk (x:xs) = Trie [] (IM.singleton (fromEnum x) (mk xs))
+hyphenationScore :: Hyphenator -> String -> [Int]
+hyphenationScore (Hyphenator nf ps es l r) s
+  | l + r >= n = replicate (n + 1) 0
+  | otherwise = case lookupException ls es of
+    Just pts -> trim pts
+    Nothing -> trim (lookupPattern ls ps)
+  where
+    trim result = replicate l 0 ++ take (n - l - r) (drop l result) ++ replicate r 0 -- drop the final replicate?
+    n  = length s
+    ls = map nf s
 
-points :: String -> [Int]
-points (x:yzs@(_:zs))
-  | x >= '0' && x <= '9' = (fromEnum x - fromEnum '0') : points zs
-  | otherwise = 0 : points yzs
-points [x] | x >= '0' && x <= '9' = [fromEnum x - fromEnum '0']
-  | otherwise = [0,0]
-points [] = [0]
-
-chars :: String -> String
-chars = filter (\x -> (x < '0' || x > '9'))
-
--- | Builds a hyphenator given a character normalization function
--- and a list of patterns.
---
--- Designed to be used partially applied to all but the last argument
--- The resulting function can be used to break a word up into fragments
--- where it would be legal to hyphenate the text.
---
--- The Knuth-Liang hyphenation algorithm isn't designed to find all
--- such points, but it does find most of them, and in particular tries
--- avoids ones where the hyphenation varies depending on the use of the
--- word as, for instance either a noun or a verb.
---
--- > do en <- hyphenate toLower <$> readHyphenationPatternFile "en.hyp"
--- >    return $ en "hyphenation"
---
--- > ["hy","phen","ation"]
-hyphenate :: (Char -> Char) -> [String] 
-          -> String -> [String]
-hyphenate nf patterns = check where
-  tree = foldr insert (Trie [] IM.empty) patterns
-  check word
-    | n <= 4 = [word]
-    | otherwise = process [] word $ V.toList $ V.create $ do
-      pts <- MV.replicate (n + 3) 0
-      forM_ [0..n-1] $ walk pts tree
-      MV.write pts 1 0
-      MV.write pts 2 0
-      MV.write pts n 0
-      MV.write pts (n + 1) 0
-      return $ MV.slice 2 n pts
-    where
-      process :: String -> String -> [Int] -> [String]
-      process acc (w:ws) (p:ps)
-         | odd p     = reverse (w:acc) : process [] ws ps
-         | otherwise = process (w:acc) ws ps
-      process acc [] [] = [reverse acc]
-      process _ _ _ = error "hyphenate: the impossible happened"
-      ls = map nf word
-      work = V.fromList ('.' : ls ++ ".")
-      n = length word
-      walk allpts t i = step (V.toList (V.drop i work)) t
-        where
-          step (x:xs) (Trie _ m) = case IM.lookup (fromEnum x) m of
-            Just t'@(Trie ps' _) -> do
-               put i ps'
-               step xs t'
-            Nothing -> return ()
-          step [] _ = return ()
-          put j _ | j `seq` False = undefined
-          put _ [] = return ()
-          put j (x:xs) = do
-            y <- MV.read allpts j
-            MV.write allpts j $ max x y
-            put (j + 1) xs
-
-content :: String -> Bool
-content (x:xs) = x /= '#' && not (isSpace x && content xs)
-content _ = True
-
--- | Load a file containing whitespace delimited patterns stripping out
--- comments lines that start with @#@
-readHyphenationPatternFile :: String -> IO [String]
-readHyphenationPatternFile fn = do
-  body <- readFile fn
-  return $ filter content (lines body) >>= words
-
--- | Read a built-in language file from the data directory where cabal installed this package.
---
--- (e.g. @hyphenateLanguage \"en\"@ opens @\"\/Users\/ekmett\/.cabal\/lib\/hyphenation-0.1\/ghc-7.4.1\/en.hyp\"@
--- when run on the author's local machine)
-hyphenateLanguage :: String -> IO (String -> [String])
-hyphenateLanguage language = do
-  src <- getDataFileName (language ++ ".hyp")
-  patterns <- readHyphenationPatternFile src
-  return $ hyphenate toLower patterns
-
--- |
--- > ghci> hyphenateEnglish "supercalifragilisticexpialadocious"
--- > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
-hyphenateEnglish :: String -> [String]
-hyphenateEnglish = unsafePerformIO (hyphenateLanguage "en")
-
--- |
--- > ghci> hyphenateFrench "anticonstitutionnellement"
--- > ["an","ti","cons","ti","tu","tion","nel","le","ment"]
-hyphenateFrench :: String -> [String]
-hyphenateFrench = unsafePerformIO (hyphenateLanguage "fr")
-
--- |
--- > ghci> hyphenateIcelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
--- > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
-hyphenateIcelandic :: String -> [String]
-hyphenateIcelandic = unsafePerformIO (hyphenateLanguage "is")
+hyphenate :: Hyphenator -> String -> [String]
+hyphenate h s0 = go [] s0 $ tail $ hyphenationScore h s0 where
+  go acc (w:ws) (p:ps)
+    | odd p     = reverse (w:acc) : go [] ws ps
+    | otherwise = go (w:acc) ws ps
+  go acc [] _ = [reverse acc]
+  go acc ws [] = [reverse acc ++ ws]
