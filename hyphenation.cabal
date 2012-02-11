@@ -16,6 +16,17 @@ description:
   Uses the UTF8 encoded hyphenation patterns provided by
   hyph-utf8 from
   <http://www.ctan.org/tex-archive/language/hyph-utf8>
+  .
+  Usage:
+  .
+  > ghci> hyphenate english_US "supercalifragilisticexpialadocious"
+  > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
+  .
+  > ghci> hyphenate english_US "hyphenation"
+  > ["hy","phen","ation"]
+  .
+  > ghci> hyphenate icelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
+  > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
 data-dir:      data

@@ -44,7 +44,7 @@ chrLine [] = []
 
 -- | Read a built-in language file from the data directory where cabal installed this package.
 --
--- (e.g. @hyphenateLanguage \"en-us\"@ opens @\"\/Users\/ekmett\/.cabal\/share\/hyphenation-0.1\/ghc-7.4.1\/hyph-en-us.hyp.txt\"@
+-- (e.g. @hyphenateLanguage \"en-us\"@ opens @\"\/Users\/ekmett\/.cabal\/share\/hyphenation-0.2\/ghc-7.4.1\/hyph-en-us.hyp.txt\"@
 -- among others when run on the author's local machine)
 loadHyphenator :: String -> IO Hyphenator
 loadHyphenator language = do
