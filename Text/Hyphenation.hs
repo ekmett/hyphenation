@@ -18,10 +18,10 @@ module Text.Hyphenation
   -- * Hyphenate with a given set of patterns
     hyphenate
   -- * Pattern file support
-  , readHyphenationPatterns
-  -- ** Loading pattern Files from the installed data directory
+  , readHyphenationPatternFile
+  -- ** Loading installed patterns
   , hyphenateLanguage
-  -- ** Known pattern files
+  -- ** Known patterns
   , hyphenateEnglish
   , hyphenateFrench
   , hyphenateIcelandic
@@ -103,15 +103,15 @@ content :: String -> Bool
 content (x:xs) = x /= '#' && not (isSpace x && content xs)
 content _ = True
 
-readHyphenationPatterns :: String -> IO [String]
-readHyphenationPatterns fn = do
+readHyphenationPatternFile :: String -> IO [String]
+readHyphenationPatternFile fn = do
   body <- readFile fn
   return $ filter content (lines body) >>= words
 
 hyphenateLanguage :: String -> IO (String -> [String])
 hyphenateLanguage language = do
   src <- getDataFileName (language ++ ".hyp")
-  patterns <- readHyphenationPatterns src
+  patterns <- readHyphenationPatternFile src
   return $ hyphenate toLower patterns
 
 -- |
