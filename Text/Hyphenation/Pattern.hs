@@ -42,11 +42,11 @@ lookupPattern xs0 = init . tail . go ('.' : xs0 ++ ".") where
     Nothing -> ys
 
 -- | Insert a Knuth-Liang hyphenation pattern into the trie
--- .
--- * @.@ denotes the start or end of the input
--- .
--- * @0-9@ are used to denote hyphenation or dehyphenation depending on whether or not they are even (no hyphen) or odd (hyphen allowed).
--- .
+--
+-- 1. @.@ denotes the start or end of the input
+--
+-- 2. @0-9@ are used to denote hyphenation or dehyphenation depending on whether or not they are even (no hyphen) or odd (hyphen allowed).
+--
 -- Patterns are overlaid and the maximum value at each location is used.
 -- this allows you to implement a finite number of precedences between hyphenation rules
 --
