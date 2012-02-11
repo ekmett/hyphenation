@@ -10,7 +10,8 @@
 -- Portability :  portable
 --
 -- Based on a Python implementation of Liang's algorithm placed in the
--- public domain by Ned Batchelder, July 2007.
+-- public domain by Ned Batchelder, July 2007. Simplified to remove the
+-- manual exception case, by building patterns for the exceptions.
 ----------------------------------------------------------------------------
 module Text.Hyphenation
   (
@@ -55,13 +56,12 @@ points [] = [0]
 chars :: String -> String
 chars = filter (\x -> (x < '0' || x > '9'))
 
--- | Build a hyphenator, given a character normalization function
+-- | Builds a hyphenator given a character normalization function
 -- and a list of patterns.
 --
--- Designed to be used partially applied.
---
--- > hyphenate_EN = hyphenate toLower englishPatterns
-hyphenate :: (Char -> Char) -> [String] -> String -> [String]
+-- Designed to be used partially applied to all but the last argument
+hyphenate :: (Char -> Char) -> [String] 
+          -> String -> [String]
 hyphenate nf patterns = check where
   tree = foldr insert (Trie [] IM.empty) patterns
   check word
@@ -80,7 +80,7 @@ hyphenate nf patterns = check where
          | odd p     = reverse (w:acc) : process [] ws ps
          | otherwise = process (w:acc) ws ps
       process acc [] [] = [reverse acc]
-      process _ _ _ = error "hyphenate': the impossible happened"
+      process _ _ _ = error "hyphenate: the impossible happened"
       ls = map nf word
       work = V.fromList ('.' : ls ++ ".")
       n = length word
@@ -114,11 +114,20 @@ hyphenateLanguage language = do
   patterns <- readHyphenationPatterns src
   return $ hyphenate toLower patterns
 
+-- |
+-- > ghci> hyphenateEnglish "supercalifragilisticexpialadocious"
+-- ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
 hyphenateEnglish :: String -> [String]
 hyphenateEnglish = unsafePerformIO (hyphenateLanguage "en")
 
+-- |
+-- > ghci> hyphenateFrench "anticonstitutionnellement"
+-- > ["an","ti","cons","ti","tu","tion","nel","le","ment"]
 hyphenateFrench :: String -> [String]
 hyphenateFrench = unsafePerformIO (hyphenateLanguage "fr")
 
+-- |
+-- > ghci> hyphenateIcelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
+-- > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 hyphenateIcelandic :: String -> [String]
 hyphenateIcelandic = unsafePerformIO (hyphenateLanguage "is")
