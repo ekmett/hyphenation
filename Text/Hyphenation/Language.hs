@@ -32,7 +32,7 @@ module Text.Hyphenation.Language
 
 import Data.Maybe (fromMaybe)
 import qualified Data.IntMap as IM
-import Text.Hyphenation
+import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe

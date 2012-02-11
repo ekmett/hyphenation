@@ -33,8 +33,10 @@ library
 
   exposed-modules:
    Text.Hyphenation
-   Text.Hyphenation.Exception
+   Text.Hyphenation.Hyphenator
    Text.Hyphenation.Language
+
+   Text.Hyphenation.Exception
    Text.Hyphenation.Pattern
 
   other-modules:
