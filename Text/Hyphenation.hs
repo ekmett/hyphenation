@@ -17,11 +17,11 @@ module Text.Hyphenation
   (
   -- * Hyphenate with a given set of patterns
     hyphenate
-  -- * Pattern Files Support
+  -- * Pattern file support
   , readHyphenationPatterns
   -- ** Loading pattern Files from the installed data directory
   , hyphenateLanguage
-  -- ** Supplied hyphenation pattern files
+  -- ** Known pattern files
   , hyphenateEnglish
   , hyphenateFrench
   , hyphenateIcelandic
