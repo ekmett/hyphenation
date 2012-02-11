@@ -103,11 +103,17 @@ content :: String -> Bool
 content (x:xs) = x /= '#' && not (isSpace x && content xs)
 content _ = True
 
+-- | Load a file containing whitespace delimited patterns stripping out
+-- comments lines that start with @#@
 readHyphenationPatternFile :: String -> IO [String]
 readHyphenationPatternFile fn = do
   body <- readFile fn
   return $ filter content (lines body) >>= words
 
+-- | Read a built-in language file from the data directory where cabal installed this package.
+--
+-- (e.g. @hyphenateLanguage \"en\"@ opens @\"\/Users\/ekmett\/.cabal\/lib\/hyphenation-0.1\/ghc-7.4.1\/en.hyp\"@
+-- when run on the author's local machine)
 hyphenateLanguage :: String -> IO (String -> [String])
 hyphenateLanguage language = do
   src <- getDataFileName (language ++ ".hyp")
