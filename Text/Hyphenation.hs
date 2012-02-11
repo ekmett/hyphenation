@@ -9,9 +9,7 @@
 -- Stability   :  provisional
 -- Portability :  portable
 --
--- Based on a Python implementation of Liang's algorithm placed in the
--- public domain by Ned Batchelder, July 2007. Simplified to remove the
--- manual exception case, by building patterns for the exceptions.
+-- Hyphenation based on the Knuth-Liang hyphenation algorith used by TeX.
 ----------------------------------------------------------------------------
 module Text.Hyphenation
   (
@@ -60,6 +58,11 @@ chars = filter (\x -> (x < '0' || x > '9'))
 -- and a list of patterns.
 --
 -- Designed to be used partially applied to all but the last argument
+--
+-- > do en <- hyphenate toLower <$> readHyphenationPatternFile "en.hyp"
+-- >    return $ en "hyphenation"
+--
+-- > ["hy","phen","ation"]
 hyphenate :: (Char -> Char) -> [String] 
           -> String -> [String]
 hyphenate nf patterns = check where
