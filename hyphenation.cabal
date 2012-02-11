@@ -19,7 +19,7 @@ description:
 build-type:    Simple
 
 data-dir:      data
-data-files:    *.txt
+data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
 
 source-repository head
   type: git

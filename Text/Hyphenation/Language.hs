@@ -39,7 +39,7 @@ import System.IO.Unsafe
 import Paths_hyphenation
 
 chrLine :: String -> [(Int, Char)]
-chrLine (x:xs) = map ((,) (fromEnum x)) xs
+chrLine (x:xs) = map (\y -> (fromEnum y, x)) xs
 chrLine [] = []
 
 -- | Read a built-in language file from the data directory where cabal installed this package.
