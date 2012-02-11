@@ -116,7 +116,7 @@ hyphenateLanguage language = do
 
 -- |
 -- > ghci> hyphenateEnglish "supercalifragilisticexpialadocious"
--- ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
+-- > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
 hyphenateEnglish :: String -> [String]
 hyphenateEnglish = unsafePerformIO (hyphenateLanguage "en")
 
