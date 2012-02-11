@@ -1,7 +1,7 @@
 # French hyphenation patterns
 # Based on frhyph.tex - French hyphenation patterns (V2.12) <2002/12/11>
 #
-# The most famous good guys who worked hard to obtain something usable. 
+# The most famous good guys who worked hard to obtain something usable.
 # Jacques Desarmenien, Universite de Strasbourg :
 #          -  << how to run TeX in a French environment: hyphenation, fonts,
 #             typography. >> in Tugboat, 5 (1984) 91-102. and TeX85 conference
@@ -17,14 +17,12 @@
 #
 # -----------------------------------------------------------------
 #
-# Adaption of these patterns for
-#  - TeX Version 3.x and MLTeX 3.x (2.x)
-# and
-#  - all fonts in T1/`Cork' and/or CM/OT1 encoding
-# by Bernd Raichle 1996/08/28 (using ideas from `ghyph31.tex'
-# as of 1994-02-13 maintained by Bernd Raichle).
+# Based on an adaption of these patterns for TeX Version 3.x and MLTeX 3.x (2.x)
+# by Bernd Raichle 1996/08/28
 #
 # Mangled into unicode and probably botched by Edward Kmett on Feb 10, 2011
+#
+# Notably the guards around isolated accents in here probably broke.
 2'2
 .a4
 á4
