@@ -9,7 +9,10 @@
 -- Stability   :  provisional
 -- Portability :  portable
 --
--- Hyphenation based on the Knuth-Liang hyphenation algorith used by TeX.
+-- Hyphenation based on the Knuth-Liang algorithm as used by TeX.
+--
+-- The implementation is based on Ned Batchelder's public domain @hyphenate.py@
+-- and simplified to remove the need for a manual exception list.
 ----------------------------------------------------------------------------
 module Text.Hyphenation
   (
@@ -58,6 +61,13 @@ chars = filter (\x -> (x < '0' || x > '9'))
 -- and a list of patterns.
 --
 -- Designed to be used partially applied to all but the last argument
+-- The resulting function can be used to break a word up into fragments
+-- where it would be legal to hyphenate the text.
+--
+-- The Knuth-Liang hyphenation algorithm isn't designed to find all
+-- such points, but it does find most of them, and in particular tries
+-- avoids ones where the hyphenation varies depending on the use of the
+-- word as, for instance either a noun or a verb.
 --
 -- > do en <- hyphenate toLower <$> readHyphenationPatternFile "en.hyp"
 -- >    return $ en "hyphenation"
