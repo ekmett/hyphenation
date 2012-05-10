@@ -30,9 +30,9 @@ description:
   > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
-extra-source-files: .travis.yml
 data-dir:      data
 data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
+extra-source-files: .travis.yml
 
 source-repository head
   type: git
