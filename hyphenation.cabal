@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.2.1.1
+version:       0.2.1.2
 license:       BSD3
 cabal-version: >= 1.6
 license-file:  LICENSE
@@ -8,6 +8,7 @@ author:        Edward A. Kmett
 maintainer:    Edward A. Kmett <ekmett@gmail.com>
 stability:     provisional
 homepage:      http://github.com/ekmett/hyphenation
+bug-reports:   http://github.com/ekmett/hyphenation/issues
 copyright:     (C) 2012 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
 description:
@@ -29,6 +30,7 @@ description:
   > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
+extra-source-files: .travis.yml
 data-dir:      data
 data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
 
