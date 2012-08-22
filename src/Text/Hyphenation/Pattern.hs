@@ -24,6 +24,7 @@ import Data.Monoid
 import Prelude hiding (lookup)
 import Data.Char (digitToInt, isDigit)
 
+-- | Hyphenation patterns
 data Patterns = Patterns [Int] (IM.IntMap Patterns)
   deriving Show
 
@@ -68,12 +69,14 @@ parsePatterns = foldr insertPattern mempty . lines
 chars :: String -> String
 chars = filter (\x -> (x < '0' || x > '9'))
 
+-- | Convert a Pattern string to a Score
 scorePattern :: String -> [Int]
 scorePattern [] = [0]
 scorePattern (x:ys)
   | isDigit x = digitToInt x : if null ys then [] else scorePattern (tail ys)
   | otherwise = 0 : scorePattern ys
 
+-- | Zip two scores.
 zipMax :: [Int] -> [Int] -> [Int]
 zipMax (x:xs) (y:ys) = max x y : zipMax xs ys
 zipMax [] ys = ys

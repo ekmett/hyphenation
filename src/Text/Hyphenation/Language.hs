@@ -55,6 +55,7 @@ loadHyphenator language = do
       tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
   return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
 
+-- | A strongly typed set of available languages you can use for hyphenation.
 data Language
   = Afrikaans
   | Basque
@@ -192,30 +193,30 @@ languageAffix s = case s of
 
 
 -- |
--- > ghci> hyphenate english_US "supercalifragilisticexpialadocious"
--- > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
+-- >>> hyphenate english_US "supercalifragilisticexpialadocious"
+-- ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
 --
 -- favors US hyphenation
 english_US :: Hyphenator
 
 -- |
--- > ghci> hyphenate english_GB "supercalifragilisticexpialadocious"
--- > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
+-- >>> hyphenate english_GB "supercalifragilisticexpialadocious"
+-- ["su","per","cal","i","fra","gil","istic","ex","pi","alado","cious"]
 --
 -- favors UK hyphenation
 english_GB :: Hyphenator
 
 -- |
--- > ghci> hyphenate french "anticonstitutionnellement"
--- > ["an","ti","cons","ti","tu","tion","nel","le","ment"]
+-- >>> hyphenate french "anticonstitutionnellement"
+-- ["an","ti","cons","ti","tu","tion","nel","le","ment"]
 french :: Hyphenator
 
 -- |
--- > ghci> hyphenate icelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
--- > ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
+-- >>> hyphenate icelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
+-- ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 icelandic :: Hyphenator
 
-
+-- | Hyphenators for a wide array of languages.
 afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
  estonian, ethiopic, farsi, finnish, galician, german_1901, german_1996,
@@ -294,6 +295,7 @@ ukrainian = unsafePerformIO (loadHyphenator (languageAffix Ukrainian))
 uppersorbian = unsafePerformIO (loadHyphenator (languageAffix Uppersorbian))
 welsh = unsafePerformIO (loadHyphenator (languageAffix Welsh))
 
+-- | Load (and cache) the hyphenator for a given language.
 languageHyphenator :: Language -> Hyphenator
 languageHyphenator s = case s of
   Afrikaans -> afrikaans

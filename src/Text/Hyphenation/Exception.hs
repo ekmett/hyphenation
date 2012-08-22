@@ -23,7 +23,7 @@ import qualified Data.HashMap.Strict as HM
 import Data.Monoid
 import Prelude hiding (lookup)
 
--- manually supplied hyphenations
+-- | Hyphenation exceptions are special cases that should use the specified hyphenation points.
 newtype Exceptions = Exceptions (HM.HashMap String [Int])
   deriving Show
 
@@ -44,15 +44,17 @@ addException :: String -> Exceptions -> Exceptions
 addException s (Exceptions m) = Exceptions $
   HM.insertWith zipMin (filter (/= '-') s) (scoreException s) m
 
+-- | Try to find a matching hyphenation exception.
 lookupException :: String -> Exceptions -> Maybe [Int]
 lookupException s (Exceptions m) = HM.lookup s m
 
+-- | Convert an exception string to a score.
 scoreException :: String -> [Int]
 scoreException []         = [0]
 scoreException (x:ys)
   | x == '-'  = 1 : if null ys then [] else scoreException (tail ys)
   | otherwise = 0 : scoreException ys
 
--- parse one exception per line from an input string
+-- | Parse one exception per line from an input string
 parseExceptions :: String -> Exceptions
 parseExceptions = foldr addException mempty . lines

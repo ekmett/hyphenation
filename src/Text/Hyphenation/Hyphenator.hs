@@ -21,10 +21,21 @@ module Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 
-defaultLeftMin, defaultRightMin :: Int
+-- | By default, do not insert hyphens in the first two characters
+--
+-- >>> defaultLeftMin
+-- 2
+defaultLeftMin :: Int
 defaultLeftMin = 2
+-- | By default, do not insert hyphens in the last three characters.
+--
+-- >>> defaultRightMin
+-- 3
+defaultRightMin :: Int
 defaultRightMin = 3
 
+-- | A @Hyphenator@ is combination of an alphabet normalization scheme, a set of 'Patterns', a set of 'Exceptions' to those patterns
+-- and a number of characters at each end to skip hyphenating.
 data Hyphenator = Hyphenator
   { hyphenatorChars      :: Char -> Char        -- ^ a normalization function applied to input characters before applying patterns or exceptions
   , hyphenatorPatterns   :: Patterns            -- ^ hyphenation patterns stored in a trie
@@ -33,6 +44,7 @@ data Hyphenator = Hyphenator
   , hyphenatorRightMin   :: {-# UNPACK #-} !Int -- ^ the number of characters at the end of the word to skip hyphenating, by default: 3
   }
 
+-- | Using a 'Hyphenator', compute the score of a string.
 hyphenationScore :: Hyphenator -> String -> [Int]
 hyphenationScore (Hyphenator nf ps es l r) s
   | l + r >= n = replicate (n + 1) 0
@@ -46,11 +58,14 @@ hyphenationScore (Hyphenator nf ps es l r) s
 
 -- | hyphenate a single word using the specified Hyphenator. Returns a set of candidate breakpoints by decomposing the input
 -- into substrings.
--- 
--- > ghci> hyphenate english_US "supercalifragilisticexpialadocious"
--- > ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
--- > ghci> hyphenate english_US "hyphenation"
--- > ["hy","phen","ation"]
+--
+-- >>> import Text.Hyphenation
+--
+-- >>> hyphenate english_US "supercalifragilisticexpialadocious"
+-- ["su","per","cal","ifrag","ilis","tic","ex","pi","al","ado","cious"]
+--
+-- >>> hyphenate english_US "hyphenation"
+-- ["hy","phen","ation"]
 hyphenate :: Hyphenator -> String -> [String]
 hyphenate h s0 = go [] s0 $ tail $ hyphenationScore h s0 where
   go acc (w:ws) (p:ps)
