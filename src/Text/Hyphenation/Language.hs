@@ -212,7 +212,7 @@ english_GB :: Hyphenator
 french :: Hyphenator
 
 -- |
--- >>> hyphenate icelandic "vaðlaheiðavegavinnuverkfærageymsluskúr"
+-- >>> hyphenate icelandic "va\240lahei\240avegavinnuverkf\230rageymslusk\250r"
 -- ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 icelandic :: Hyphenator
 
