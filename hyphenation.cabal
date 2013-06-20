@@ -32,7 +32,7 @@ build-type:    Simple
 
 data-dir:      data
 data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
-extra-source-files: .travis.yml
+extra-source-files: .travis.yml CHANGELOG.markdown
 
 source-repository head
   type: git
