@@ -26,7 +26,7 @@ module Text.Hyphenation.Language
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
   , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
-  , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian
+  , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
   , serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil
   , telugu, turkish, turkmen, ukrainian, uppersorbian, welsh
@@ -109,6 +109,7 @@ data Language
   | Polish
   | Portuguese
   | Romanian
+  | Romansh
   | Russian
   | Sanskrit
   | Serbian_Cyrillic
@@ -182,6 +183,7 @@ languageAffix s = case s of
   Polish -> "pl"
   Portuguese -> "pt"
   Romanian -> "ro"
+  Romansh -> "rm"
   Russian -> "ru"
   Sanskrit -> "sa"
   Serbian_Cyrillic -> "sr-cyrl"
@@ -232,7 +234,7 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
  norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
- russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
+ romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
  telugu, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
 
@@ -288,6 +290,7 @@ piedmontese = unsafePerformIO (loadHyphenator (languageAffix Piedmontese))
 polish = unsafePerformIO (loadHyphenator (languageAffix Polish))
 portuguese = unsafePerformIO (loadHyphenator (languageAffix Portuguese))
 romanian = unsafePerformIO (loadHyphenator (languageAffix Romanian))
+romansh = unsafePerformIO (loadHyphenator (languageAffix Romansh))
 russian = unsafePerformIO (loadHyphenator (languageAffix Russian))
 sanskrit = unsafePerformIO (loadHyphenator (languageAffix Sanskrit))
 serbian_Cyrillic = unsafePerformIO (loadHyphenator (languageAffix Serbian_Cyrillic))
@@ -360,6 +363,7 @@ languageHyphenator s = case s of
   Polish -> polish
   Portuguese -> portuguese
   Romanian -> romanian
+  Romansh -> romansh
   Russian -> russian
   Sanskrit -> sanskrit
   Serbian_Cyrillic -> serbian_Cyrillic
