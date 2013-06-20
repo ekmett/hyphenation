@@ -29,7 +29,7 @@ module Text.Hyphenation.Language
   , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
   , serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil
-  , telugu, turkish, turkmen, ukrainian, uppersorbian, welsh
+  , telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh
   , loadHyphenator
   , languageAffix
   ) where
@@ -120,6 +120,7 @@ data Language
   | Swedish
   | Tamil
   | Telugu
+  | Thai
   | Turkish
   | Turkmen
   | Ukrainian
@@ -195,6 +196,7 @@ languageAffix s = case s of
   Swedish -> "sv"
   Tamil -> "ta"
   Telugu -> "te"
+  Thai -> "th"
   Turkish -> "tr"
   Turkmen -> "tk"
   Ukrainian -> "uk"
@@ -236,7 +238,7 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
- telugu, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
+ telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
 
 afrikaans = unsafePerformIO (loadHyphenator (languageAffix Afrikaans))
 basque = unsafePerformIO (loadHyphenator (languageAffix Basque))
@@ -302,6 +304,7 @@ spanish = unsafePerformIO (loadHyphenator (languageAffix Spanish))
 swedish = unsafePerformIO (loadHyphenator (languageAffix Swedish))
 tamil = unsafePerformIO (loadHyphenator (languageAffix Tamil))
 telugu = unsafePerformIO (loadHyphenator (languageAffix Telugu))
+thai = unsafePerformIO (loadHyphenator (languageAffix Thai))
 turkish = unsafePerformIO (loadHyphenator (languageAffix Turkish))
 turkmen = unsafePerformIO (loadHyphenator (languageAffix Turkmen))
 ukrainian = unsafePerformIO (loadHyphenator (languageAffix Ukrainian))
@@ -375,6 +378,7 @@ languageHyphenator s = case s of
   Swedish -> swedish
   Tamil -> tamil
   Telugu -> telugu
+  Thai -> thai
   Turkish -> turkish
   Turkmen -> turkmen
   Ukrainian -> ukrainian
