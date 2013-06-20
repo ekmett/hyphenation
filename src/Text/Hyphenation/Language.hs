@@ -79,6 +79,7 @@ data Language
   | Farsi
   | Finnish
   | French
+  | Friulan
   | Galician
   | German_1901 | German_1996 | German_Swiss
   | Greek_Ancient
@@ -147,6 +148,7 @@ languageAffix s = case s of
   Farsi -> "fa"
   Finnish -> "fi"
   French -> "fr"
+  Friulan -> "fur"
   Galician -> "gl"
   German_1901  -> "de-1901"
   German_1996  -> "de-1996"
@@ -223,7 +225,7 @@ icelandic :: Hyphenator
 -- | Hyphenators for a wide array of languages.
 afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
- estonian, ethiopic, farsi, finnish, galician, german_1901, german_1996,
+ estonian, ethiopic, farsi, finnish, friulan, galician, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
  indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
@@ -251,6 +253,7 @@ ethiopic = unsafePerformIO (loadHyphenator (languageAffix Ethiopic))
 farsi = unsafePerformIO (loadHyphenator (languageAffix Farsi))
 finnish = unsafePerformIO (loadHyphenator (languageAffix Finnish))
 french = unsafePerformIO (loadHyphenator (languageAffix French))
+friulan = unsafePerformIO (loadHyphenator (languageAffix Friulan))
 galician = unsafePerformIO (loadHyphenator (languageAffix Galician))
 german_1901 = unsafePerformIO (loadHyphenator (languageAffix German_1901))
 german_1996 = unsafePerformIO (loadHyphenator (languageAffix German_1996))
@@ -321,6 +324,7 @@ languageHyphenator s = case s of
   Farsi -> farsi
   Finnish -> finnish
   French -> french
+  Friulan -> friulan
   Galician -> galician
   German_1901  -> german_1901
   German_1996  -> german_1996
@@ -368,4 +372,3 @@ languageHyphenator s = case s of
   Ukrainian -> ukrainian
   Uppersorbian -> uppersorbian
   Welsh -> welsh
-
