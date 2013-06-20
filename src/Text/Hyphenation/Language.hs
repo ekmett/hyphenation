@@ -26,7 +26,7 @@ module Text.Hyphenation.Language
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
   , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
-  , norwegian_Nynorsk, oriya, panjabi, polish, portuguese, romanian
+  , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
   , serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil
   , telugu, turkish, turkmen, ukrainian, uppersorbian, welsh
@@ -105,6 +105,7 @@ data Language
   | Norwegian_Bokmal | Norwegian_Nynorsk
   | Oriya
   | Panjabi
+  | Piedmontese
   | Polish
   | Portuguese
   | Romanian
@@ -177,6 +178,7 @@ languageAffix s = case s of
   Norwegian_Nynorsk -> "nn"
   Oriya -> "or"
   Panjabi -> "pa"
+  Piedmontese -> "pms"
   Polish -> "pl"
   Portuguese -> "pt"
   Romanian -> "ro"
@@ -229,7 +231,7 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
  indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
- norwegian_Nynorsk, oriya, panjabi, polish, portuguese, romanian,
+ norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
  telugu, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
@@ -282,6 +284,7 @@ norwegian_Bokmal = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Bokm
 norwegian_Nynorsk = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Nynorsk))
 oriya = unsafePerformIO (loadHyphenator (languageAffix Oriya))
 panjabi = unsafePerformIO (loadHyphenator (languageAffix Panjabi))
+piedmontese = unsafePerformIO (loadHyphenator (languageAffix Piedmontese))
 polish = unsafePerformIO (loadHyphenator (languageAffix Polish))
 portuguese = unsafePerformIO (loadHyphenator (languageAffix Portuguese))
 romanian = unsafePerformIO (loadHyphenator (languageAffix Romanian))
@@ -353,6 +356,7 @@ languageHyphenator s = case s of
   Norwegian_Nynorsk -> norwegian_Nynorsk
   Oriya -> oriya
   Panjabi -> panjabi
+  Piedmontese -> piedmontese
   Polish -> polish
   Portuguese -> portuguese
   Romanian -> romanian
