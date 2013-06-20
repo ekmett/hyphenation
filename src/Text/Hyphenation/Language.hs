@@ -22,7 +22,7 @@ module Text.Hyphenation.Language
   -- * Provided language hyphenators
   , afrikaans, basque, bengali, bulgarian, catalan, chinese
   , coptic, croatian, czech, danish, dutch, english_US, english_GB, esperanto
-  , estonian, ethiopic, farsi, finnish, french, galician, german_1901, german_1996
+  , estonian, ethiopic, farsi, finnish, french, friulan, galician, german_1901, german_1996
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
   , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
