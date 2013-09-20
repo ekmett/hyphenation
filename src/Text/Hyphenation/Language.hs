@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.Language
--- Copyright   :  (C) 2012 Edward Kmett,
+-- Copyright   :  (C) 2012-2013 Edward Kmett,
 --                (C) 2007 Ned Batchelder
 -- License     :  BSD-style (see the languageAffix LICENSE)
 --
@@ -22,7 +22,7 @@ module Text.Hyphenation.Language
   -- * Provided language hyphenators
   , afrikaans, basque, bengali, bulgarian, catalan, chinese
   , coptic, croatian, czech, danish, dutch, english_US, english_GB, esperanto
-  , estonian, ethiopic, farsi, finnish, french, friulan, galician, german_1901, german_1996
+  , estonian, ethiopic, {- farsi, -} finnish, french, friulan, galician, german_1901, german_1996
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
   , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
@@ -76,7 +76,7 @@ data Language
   | Esperanto
   | Estonian
   | Ethiopic
-  | Farsi
+  -- | Farsi
   | Finnish
   | French
   | Friulan
@@ -148,7 +148,7 @@ languageAffix s = case s of
   Esperanto -> "eo"
   Estonian -> "et"
   Ethiopic -> "mul-ethi"
-  Farsi -> "fa"
+  -- Farsi -> "fa"
   Finnish -> "fi"
   French -> "fr"
   Friulan -> "fur"
@@ -231,7 +231,7 @@ icelandic :: Hyphenator
 -- | Hyphenators for a wide array of languages.
 afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
- estonian, ethiopic, farsi, finnish, friulan, galician, german_1901, german_1996,
+ estonian, ethiopic, {- farsi, -} finnish, friulan, galician, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
  indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
@@ -256,7 +256,7 @@ english_GB = unsafePerformIO (loadHyphenator (languageAffix English_GB))
 esperanto = unsafePerformIO (loadHyphenator (languageAffix Esperanto))
 estonian = unsafePerformIO (loadHyphenator (languageAffix Estonian))
 ethiopic = unsafePerformIO (loadHyphenator (languageAffix Ethiopic))
-farsi = unsafePerformIO (loadHyphenator (languageAffix Farsi))
+-- farsi = unsafePerformIO (loadHyphenator (languageAffix Farsi))
 finnish = unsafePerformIO (loadHyphenator (languageAffix Finnish))
 french = unsafePerformIO (loadHyphenator (languageAffix French))
 friulan = unsafePerformIO (loadHyphenator (languageAffix Friulan))
@@ -330,7 +330,7 @@ languageHyphenator s = case s of
   Esperanto -> esperanto
   Estonian -> estonian
   Ethiopic -> ethiopic
-  Farsi -> farsi
+  -- Farsi -> farsi
   Finnish -> finnish
   French -> french
   Friulan -> friulan

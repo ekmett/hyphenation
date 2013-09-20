@@ -1,3 +1,7 @@
+0.4
+---
+* Removed Farsi. We had no pattern files.
+
 0.3
 ---
 * Added Friulan, Piedmontese, Romansh and Thai language hyphenations.
