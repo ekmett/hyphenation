@@ -30,19 +30,32 @@ description:
   ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
-extra-source-files: .travis.yml CHANGELOG.markdown data/*.hyp.txt data/*.pat.txt data/*.lic.txt data/*.chr.txt
+data-dir:      data
+data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
+extra-source-files: .travis.yml CHANGELOG.markdown
 
 source-repository head
   type: git
   location: git://github.com/ekmett/hyphenation.git
 
+Flag Embed
+  Description: Embed data in library binary
+               (Warning: This increases the executable size by about 3Mbs unless
+                         unneeded language data files are manually removed from
+                         the "data" directory before compiling)
+  Default:     False
+
 library
   build-depends:
     base                 >= 4       && < 5,
     containers           >= 0.3.0.0 && < 0.6,
-    unordered-containers >= 0.2.1   && < 0.3,
-    file-embed           >= 0.0.7   && < 0.1,
-    bytestring           >= 0.9.4   && < 0.11
+    unordered-containers >= 0.2.1   && < 0.3
+
+  if flag(embed)
+    build-depends:
+      file-embed           >= 0.0.7   && < 0.1,
+      bytestring           >= 0.9.4   && < 0.11
+    CC-OPtions: "-DEMBED"
 
   exposed-modules:
    Text.Hyphenation
@@ -50,6 +63,9 @@ library
    Text.Hyphenation.Language
    Text.Hyphenation.Exception
    Text.Hyphenation.Pattern
+ 
+  other-modules:
+   Paths_hyphenation
 
   hs-source-dirs: src
   ghc-options: -Wall

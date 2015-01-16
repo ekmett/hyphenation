@@ -2,7 +2,9 @@
 #if defined(__GLASGOW_HASKELL__) && __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE Trustworthy #-}
 #endif
+#if EMBED
 {-# LANGUAGE TemplateHaskell #-}
+#endif
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.Language
@@ -40,28 +42,44 @@ import qualified Data.IntMap as IM
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
+import System.IO.Unsafe
+
+#if !EMBED
+import Paths_hyphenation
+#else
 import Data.FileEmbed
 import Control.Arrow (second)
 import Data.ByteString.Char8 (unpack)
+
+hyphenatorFiles :: [(FilePath, String)]
+hyphenatorFiles = map (second unpack) $(embedDir "data")
+#endif
 
 chrLine :: String -> [(Int, Char)]
 chrLine (x:xs) = map (\y -> (fromEnum y, x)) xs
 chrLine [] = []
 
-hyphenatorFiles :: [(FilePath, String)]
-hyphenatorFiles = map (second unpack) $(embedDir "data")
-
 -- | Read a built-in language file from the data directory where cabal installed this package.
 --
 -- (e.g. @hyphenateLanguage \"en-us\"@ opens @\"\/Users\/ekmett\/.cabal\/share\/hyphenation-0.2\/ghc-7.4.1\/hyph-en-us.hyp.txt\"@
 -- among others when run on the author's local machine)
-loadHyphenator :: String -> Hyphenator
-loadHyphenator language = Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
+loadHyphenator :: String -> IO Hyphenator
+#if !EMBED
+loadHyphenator language = do
+  hyp <- getDataFileName ("hyph-" ++ language ++ ".hyp.txt") >>= readFile
+  pat <- getDataFileName ("hyph-" ++ language ++ ".pat.txt") >>= readFile
+  chr <- getDataFileName ("hyph-" ++ language ++ ".chr.txt") >>= readFile
+  let chrMap = IM.fromList (lines chr >>= chrLine)
+      tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
+  return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
+#else
+loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
   where Just hyp = lookup ("hyph-" ++ language ++ ".hyp.txt") hyphenatorFiles
         Just pat = lookup ("hyph-" ++ language ++ ".pat.txt") hyphenatorFiles
         Just chr = lookup ("hyph-" ++ language ++ ".chr.txt") hyphenatorFiles
         chrMap = IM.fromList (lines chr >>= chrLine)
         tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
+#endif
 
 -- | A strongly typed set of available languages you can use for hyphenation.
 data Language
@@ -244,76 +262,76 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
  telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
 
-afrikaans = loadHyphenator (languageAffix Afrikaans)
-basque = loadHyphenator (languageAffix Basque)
-bengali = loadHyphenator (languageAffix Bengali)
-bulgarian = loadHyphenator (languageAffix Bulgarian)
-catalan = loadHyphenator (languageAffix Catalan)
-chinese = loadHyphenator (languageAffix Chinese)
-coptic = loadHyphenator (languageAffix Coptic)
-croatian = loadHyphenator (languageAffix Croatian)
-czech = loadHyphenator (languageAffix Czech)
-danish = loadHyphenator (languageAffix Danish)
-dutch = loadHyphenator (languageAffix Dutch)
-english_US = loadHyphenator (languageAffix English_US)
-english_GB = loadHyphenator (languageAffix English_GB)
-esperanto = loadHyphenator (languageAffix Esperanto)
-estonian = loadHyphenator (languageAffix Estonian)
-ethiopic = loadHyphenator (languageAffix Ethiopic)
--- farsi = loadHyphenator (languageAffix Farsi)
-finnish = loadHyphenator (languageAffix Finnish)
-french = loadHyphenator (languageAffix French)
-friulan = loadHyphenator (languageAffix Friulan)
-galician = loadHyphenator (languageAffix Galician)
-german_1901 = loadHyphenator (languageAffix German_1901)
-german_1996 = loadHyphenator (languageAffix German_1996)
-german_Swiss = loadHyphenator (languageAffix German_Swiss)
-greek_Ancient = loadHyphenator (languageAffix Greek_Ancient)
-greek_Mono = loadHyphenator (languageAffix Greek_Mono)
-greek_Poly = loadHyphenator (languageAffix Greek_Poly)
-gujarati = loadHyphenator (languageAffix Gujarati)
-hindi = loadHyphenator (languageAffix Hindi)
-hungarian = loadHyphenator (languageAffix Hungarian)
-icelandic = loadHyphenator (languageAffix Icelandic)
-indonesian = loadHyphenator (languageAffix Indonesian)
-interlingua = loadHyphenator (languageAffix Interlingua)
-irish = loadHyphenator (languageAffix Irish)
-italian = loadHyphenator (languageAffix Italian)
-kannada = loadHyphenator (languageAffix Kannada)
-kurmanji = loadHyphenator (languageAffix Kurmanji)
-lao = loadHyphenator (languageAffix Lao)
-latin = loadHyphenator (languageAffix Latin)
-latvian = loadHyphenator (languageAffix Latvian)
-lithuanian = loadHyphenator (languageAffix Lithuanian)
-malayalam = loadHyphenator (languageAffix Malayalam)
-marathi = loadHyphenator (languageAffix Marathi)
-mongolian = loadHyphenator (languageAffix Mongolian)
-norwegian_Bokmal = loadHyphenator (languageAffix Norwegian_Bokmal)
-norwegian_Nynorsk = loadHyphenator (languageAffix Norwegian_Nynorsk)
-oriya = loadHyphenator (languageAffix Oriya)
-panjabi = loadHyphenator (languageAffix Panjabi)
-piedmontese = loadHyphenator (languageAffix Piedmontese)
-polish = loadHyphenator (languageAffix Polish)
-portuguese = loadHyphenator (languageAffix Portuguese)
-romanian = loadHyphenator (languageAffix Romanian)
-romansh = loadHyphenator (languageAffix Romansh)
-russian = loadHyphenator (languageAffix Russian)
-sanskrit = loadHyphenator (languageAffix Sanskrit)
-serbian_Cyrillic = loadHyphenator (languageAffix Serbian_Cyrillic)
-serbocroatian_Cyrillic = loadHyphenator (languageAffix Serbocroatian_Cyrillic)
-serbocroatian_Latin = loadHyphenator (languageAffix Serbocroatian_Latin)
-slovak = loadHyphenator (languageAffix Slovak)
-slovenian = loadHyphenator (languageAffix Slovenian)
-spanish = loadHyphenator (languageAffix Spanish)
-swedish = loadHyphenator (languageAffix Swedish)
-tamil = loadHyphenator (languageAffix Tamil)
-telugu = loadHyphenator (languageAffix Telugu)
-thai = loadHyphenator (languageAffix Thai)
-turkish = loadHyphenator (languageAffix Turkish)
-turkmen = loadHyphenator (languageAffix Turkmen)
-ukrainian = loadHyphenator (languageAffix Ukrainian)
-uppersorbian = loadHyphenator (languageAffix Uppersorbian)
-welsh = loadHyphenator (languageAffix Welsh)
+afrikaans = unsafePerformIO (loadHyphenator (languageAffix Afrikaans))
+basque = unsafePerformIO (loadHyphenator (languageAffix Basque))
+bengali = unsafePerformIO (loadHyphenator (languageAffix Bengali))
+bulgarian = unsafePerformIO (loadHyphenator (languageAffix Bulgarian))
+catalan = unsafePerformIO (loadHyphenator (languageAffix Catalan))
+chinese = unsafePerformIO (loadHyphenator (languageAffix Chinese))
+coptic = unsafePerformIO (loadHyphenator (languageAffix Coptic))
+croatian = unsafePerformIO (loadHyphenator (languageAffix Croatian))
+czech = unsafePerformIO (loadHyphenator (languageAffix Czech))
+danish = unsafePerformIO (loadHyphenator (languageAffix Danish))
+dutch = unsafePerformIO (loadHyphenator (languageAffix Dutch))
+english_US = unsafePerformIO (loadHyphenator (languageAffix English_US))
+english_GB = unsafePerformIO (loadHyphenator (languageAffix English_GB))
+esperanto = unsafePerformIO (loadHyphenator (languageAffix Esperanto))
+estonian = unsafePerformIO (loadHyphenator (languageAffix Estonian))
+ethiopic = unsafePerformIO (loadHyphenator (languageAffix Ethiopic))
+-- farsi = unsafePerformIO (loadHyphenator (languageAffix Farsi))
+finnish = unsafePerformIO (loadHyphenator (languageAffix Finnish))
+french = unsafePerformIO (loadHyphenator (languageAffix French))
+friulan = unsafePerformIO (loadHyphenator (languageAffix Friulan))
+galician = unsafePerformIO (loadHyphenator (languageAffix Galician))
+german_1901 = unsafePerformIO (loadHyphenator (languageAffix German_1901))
+german_1996 = unsafePerformIO (loadHyphenator (languageAffix German_1996))
+german_Swiss = unsafePerformIO (loadHyphenator (languageAffix German_Swiss))
+greek_Ancient = unsafePerformIO (loadHyphenator (languageAffix Greek_Ancient))
+greek_Mono = unsafePerformIO (loadHyphenator (languageAffix Greek_Mono))
+greek_Poly = unsafePerformIO (loadHyphenator (languageAffix Greek_Poly))
+gujarati = unsafePerformIO (loadHyphenator (languageAffix Gujarati))
+hindi = unsafePerformIO (loadHyphenator (languageAffix Hindi))
+hungarian = unsafePerformIO (loadHyphenator (languageAffix Hungarian))
+icelandic = unsafePerformIO (loadHyphenator (languageAffix Icelandic))
+indonesian = unsafePerformIO (loadHyphenator (languageAffix Indonesian))
+interlingua = unsafePerformIO (loadHyphenator (languageAffix Interlingua))
+irish = unsafePerformIO (loadHyphenator (languageAffix Irish))
+italian = unsafePerformIO (loadHyphenator (languageAffix Italian))
+kannada = unsafePerformIO (loadHyphenator (languageAffix Kannada))
+kurmanji = unsafePerformIO (loadHyphenator (languageAffix Kurmanji))
+lao = unsafePerformIO (loadHyphenator (languageAffix Lao))
+latin = unsafePerformIO (loadHyphenator (languageAffix Latin))
+latvian = unsafePerformIO (loadHyphenator (languageAffix Latvian))
+lithuanian = unsafePerformIO (loadHyphenator (languageAffix Lithuanian))
+malayalam = unsafePerformIO (loadHyphenator (languageAffix Malayalam))
+marathi = unsafePerformIO (loadHyphenator (languageAffix Marathi))
+mongolian = unsafePerformIO (loadHyphenator (languageAffix Mongolian))
+norwegian_Bokmal = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Bokmal))
+norwegian_Nynorsk = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Nynorsk))
+oriya = unsafePerformIO (loadHyphenator (languageAffix Oriya))
+panjabi = unsafePerformIO (loadHyphenator (languageAffix Panjabi))
+piedmontese = unsafePerformIO (loadHyphenator (languageAffix Piedmontese))
+polish = unsafePerformIO (loadHyphenator (languageAffix Polish))
+portuguese = unsafePerformIO (loadHyphenator (languageAffix Portuguese))
+romanian = unsafePerformIO (loadHyphenator (languageAffix Romanian))
+romansh = unsafePerformIO (loadHyphenator (languageAffix Romansh))
+russian = unsafePerformIO (loadHyphenator (languageAffix Russian))
+sanskrit = unsafePerformIO (loadHyphenator (languageAffix Sanskrit))
+serbian_Cyrillic = unsafePerformIO (loadHyphenator (languageAffix Serbian_Cyrillic))
+serbocroatian_Cyrillic = unsafePerformIO (loadHyphenator (languageAffix Serbocroatian_Cyrillic))
+serbocroatian_Latin = unsafePerformIO (loadHyphenator (languageAffix Serbocroatian_Latin))
+slovak = unsafePerformIO (loadHyphenator (languageAffix Slovak))
+slovenian = unsafePerformIO (loadHyphenator (languageAffix Slovenian))
+spanish = unsafePerformIO (loadHyphenator (languageAffix Spanish))
+swedish = unsafePerformIO (loadHyphenator (languageAffix Swedish))
+tamil = unsafePerformIO (loadHyphenator (languageAffix Tamil))
+telugu = unsafePerformIO (loadHyphenator (languageAffix Telugu))
+thai = unsafePerformIO (loadHyphenator (languageAffix Thai))
+turkish = unsafePerformIO (loadHyphenator (languageAffix Turkish))
+turkmen = unsafePerformIO (loadHyphenator (languageAffix Turkmen))
+ukrainian = unsafePerformIO (loadHyphenator (languageAffix Ukrainian))
+uppersorbian = unsafePerformIO (loadHyphenator (languageAffix Uppersorbian))
+welsh = unsafePerformIO (loadHyphenator (languageAffix Welsh))
 
 -- | Load (and cache) the hyphenator for a given language.
 languageHyphenator :: Language -> Hyphenator
