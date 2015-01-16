@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.4
+version:       0.4.1
 license:       BSD3
 cabal-version: >= 1.8
 license-file:  LICENSE
@@ -30,8 +30,6 @@ description:
   ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
-data-dir:      data
-data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
 extra-source-files: .travis.yml CHANGELOG.markdown
 
 source-repository head
@@ -42,7 +40,9 @@ library
   build-depends:
     base                 >= 4       && < 5,
     containers           >= 0.3.0.0 && < 0.6,
-    unordered-containers >= 0.2.1   && < 0.3
+    unordered-containers >= 0.2.1   && < 0.3,
+    file-embed           >= 0.0.7   && < 0.1,
+    bytestring           >= 0.10.4  && < 0.11
 
   exposed-modules:
    Text.Hyphenation
@@ -50,9 +50,6 @@ library
    Text.Hyphenation.Language
    Text.Hyphenation.Exception
    Text.Hyphenation.Pattern
-
-  other-modules:
-   Paths_hyphenation
 
   hs-source-dirs: src
   ghc-options: -Wall
