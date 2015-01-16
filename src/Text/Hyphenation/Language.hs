@@ -43,7 +43,6 @@ import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe
-
 #if !EMBED
 import Paths_hyphenation
 #else

@@ -63,7 +63,7 @@ library
    Text.Hyphenation.Language
    Text.Hyphenation.Exception
    Text.Hyphenation.Pattern
- 
+
   other-modules:
    Paths_hyphenation
 
