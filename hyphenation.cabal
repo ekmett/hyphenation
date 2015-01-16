@@ -42,7 +42,7 @@ library
     containers           >= 0.3.0.0 && < 0.6,
     unordered-containers >= 0.2.1   && < 0.3,
     file-embed           >= 0.0.7   && < 0.1,
-    bytestring           >= 0.10.4  && < 0.11
+    bytestring           >= 0.9.4   && < 0.11
 
   exposed-modules:
    Text.Hyphenation
