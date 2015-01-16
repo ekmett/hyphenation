@@ -30,7 +30,7 @@ description:
   ["va\240la","hei\240a","vega","vinnu","verk","f\230ra","geymslu","sk\250r"]
 build-type:    Simple
 
-extra-source-files: .travis.yml CHANGELOG.markdown
+extra-source-files: .travis.yml CHANGELOG.markdown data/*.hyp.txt data/*.pat.txt data/*.lic.txt data/*.chr.txt
 
 source-repository head
   type: git
