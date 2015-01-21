@@ -2,6 +2,9 @@
 #if defined(__GLASGOW_HASKELL__) && __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE Trustworthy #-}
 #endif
+#if EMBED
+{-# LANGUAGE TemplateHaskell #-}
+#endif
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.Language
@@ -40,7 +43,16 @@ import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe
+#if !EMBED
 import Paths_hyphenation
+#else
+import Data.FileEmbed
+import Control.Arrow (second)
+import Data.ByteString.Char8 (unpack)
+
+hyphenatorFiles :: [(FilePath, String)]
+hyphenatorFiles = map (second unpack) $(embedDir "data")
+#endif
 
 chrLine :: String -> [(Int, Char)]
 chrLine (x:xs) = map (\y -> (fromEnum y, x)) xs
@@ -51,6 +63,7 @@ chrLine [] = []
 -- (e.g. @hyphenateLanguage \"en-us\"@ opens @\"\/Users\/ekmett\/.cabal\/share\/hyphenation-0.2\/ghc-7.4.1\/hyph-en-us.hyp.txt\"@
 -- among others when run on the author's local machine)
 loadHyphenator :: String -> IO Hyphenator
+#if !EMBED
 loadHyphenator language = do
   hyp <- getDataFileName ("hyph-" ++ language ++ ".hyp.txt") >>= readFile
   pat <- getDataFileName ("hyph-" ++ language ++ ".pat.txt") >>= readFile
@@ -58,6 +71,14 @@ loadHyphenator language = do
   let chrMap = IM.fromList (lines chr >>= chrLine)
       tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
   return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
+#else
+loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
+  where Just hyp = lookup ("hyph-" ++ language ++ ".hyp.txt") hyphenatorFiles
+        Just pat = lookup ("hyph-" ++ language ++ ".pat.txt") hyphenatorFiles
+        Just chr = lookup ("hyph-" ++ language ++ ".chr.txt") hyphenatorFiles
+        chrMap = IM.fromList (lines chr >>= chrLine)
+        tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
+#endif
 
 -- | A strongly typed set of available languages you can use for hyphenation.
 data Language
