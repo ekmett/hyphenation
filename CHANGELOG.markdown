@@ -1,3 +1,7 @@
+0.4.2
+-----
+* Fixed a typo in .cabal which prevented the `Embed` flag from working properly.
+
 0.4.1
 -----
 * Added support for embedding all of the pattern files into the library as resources by using `cabal install hyphenation -fembed`. This is not the default as it inflates the library size by ~3MB and forces all users to pay for all the hyphenation patterns, but it can be useful for users who aim to build standalone applications.
