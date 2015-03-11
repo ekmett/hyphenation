@@ -1,3 +1,7 @@
+0.4.2.1
+-------
+* `filepath` 1.4 support
+
 0.4.2
 -----
 * Fixed a typo in .cabal which prevented the `Embed` flag from working properly.
