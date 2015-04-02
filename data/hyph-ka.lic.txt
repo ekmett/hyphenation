@@ -1,8 +1,10 @@
-Afrikaans hyphenation patterns
+Georgian hyphenation patterns
 
 (more info about the licence to be added later)
 
-% Hyphenation patterns for Afrikaans
+% Georgian hyphenation paterns
+%
+% Author: Levan Shoshiashvili <shoshia at hotmail dot com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -12,20 +14,25 @@ Afrikaans hyphenation patterns
 % and version 1.3 or later is part of all distributions of LaTeX
 % version 2005/12/01 or later.
 % -----------------------------------------------------------------
-% These patterns were generated with Opatgen from a lexicon
-% of 183 000 syllabified Afrikaans words.
-% -----------------------------------------------------------------
-% VERSION: 1.0 (September 2013)
+% VERSION: 0.3 (April 2013)
 %
-% AUTHORS:  Tilla Fick (fickm@unisa.ac.za)
-%           and
-%           Chris Swanepoel (swanecj@unisa.ac.za)
-%
+% AUTHORS:  Levan Soshiashvili
+%           shoshia at hotmail dot com
+%           http://tex.tsu.ge
 % -----------------------------------------------------------------
+%
+% Generated using patgen2.
 %
 % Define lefthyphenmin to one and righthyphenmin to two
-% (although righthyphenmin could technically be made one,
-%  in allmost all cases a value of two gives better results):
 % \lefthyphenmin=1 \righthyphenmin=2
 %
-% -----------------------------------------------------------------
+% ChangeLog:
+%
+% 2013-04-15, version 0.3
+% - Patterns regenerated with lefthyphenmin=1
+% 2013-03-01, version 0.2
+% - Hyphenation patterns are regenerated from new wordlist
+%   (bigger wordlist, 150K words total, some words are fixed)
+% 2013-02-25, version 0.1
+% - First release
+%

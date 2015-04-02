@@ -25,9 +25,9 @@ module Text.Hyphenation.Language
   -- * Provided language hyphenators
   , afrikaans, basque, bengali, bulgarian, catalan, chinese
   , coptic, croatian, czech, danish, dutch, english_US, english_GB, esperanto
-  , estonian, ethiopic, {- farsi, -} finnish, french, friulan, galician, german_1901, german_1996
+  , estonian, ethiopic, {- farsi, -} finnish, french, friulan, galician, georgian, german_1901, german_1996
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
-  , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin
+  , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
   , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
@@ -102,6 +102,7 @@ data Language
   | French
   | Friulan
   | Galician
+  | Georgian
   | German_1901 | German_1996 | German_Swiss
   | Greek_Ancient
   | Greek_Mono
@@ -118,6 +119,7 @@ data Language
   | Kurmanji
   | Lao
   | Latin
+  | Latin_Classic
   | Latvian
   | Lithuanian
   | Malayalam
@@ -174,6 +176,7 @@ languageAffix s = case s of
   French -> "fr"
   Friulan -> "fur"
   Galician -> "gl"
+  Georgian -> "ka"
   German_1901  -> "de-1901"
   German_1996  -> "de-1996"
   German_Swiss -> "de-ch-1901"
@@ -192,6 +195,7 @@ languageAffix s = case s of
   Kurmanji -> "kmr"
   Lao -> "lo"
   Latin -> "la"
+  Latin_Classic -> "la-x-classic"
   Latvian -> "lv"
   Lithuanian -> "lt"
   Malayalam -> "ml"
@@ -252,9 +256,9 @@ icelandic :: Hyphenator
 -- | Hyphenators for a wide array of languages.
 afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
- estonian, ethiopic, {- farsi, -} finnish, friulan, galician, german_1901, german_1996,
+ estonian, ethiopic, {- farsi, -} finnish, friulan, galician, georgian, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
- indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin,
+ indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
  norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
@@ -282,6 +286,7 @@ finnish = unsafePerformIO (loadHyphenator (languageAffix Finnish))
 french = unsafePerformIO (loadHyphenator (languageAffix French))
 friulan = unsafePerformIO (loadHyphenator (languageAffix Friulan))
 galician = unsafePerformIO (loadHyphenator (languageAffix Galician))
+georgian = unsafePerformIO (loadHyphenator (languageAffix Georgian))
 german_1901 = unsafePerformIO (loadHyphenator (languageAffix German_1901))
 german_1996 = unsafePerformIO (loadHyphenator (languageAffix German_1996))
 german_Swiss = unsafePerformIO (loadHyphenator (languageAffix German_Swiss))
@@ -300,6 +305,7 @@ kannada = unsafePerformIO (loadHyphenator (languageAffix Kannada))
 kurmanji = unsafePerformIO (loadHyphenator (languageAffix Kurmanji))
 lao = unsafePerformIO (loadHyphenator (languageAffix Lao))
 latin = unsafePerformIO (loadHyphenator (languageAffix Latin))
+latin_Classic = unsafePerformIO (loadHyphenator (languageAffix Latin_Classic))
 latvian = unsafePerformIO (loadHyphenator (languageAffix Latvian))
 lithuanian = unsafePerformIO (loadHyphenator (languageAffix Lithuanian))
 malayalam = unsafePerformIO (loadHyphenator (languageAffix Malayalam))
@@ -356,6 +362,7 @@ languageHyphenator s = case s of
   French -> french
   Friulan -> friulan
   Galician -> galician
+  Georgian -> georgian
   German_1901  -> german_1901
   German_1996  -> german_1996
   German_Swiss -> german_Swiss
@@ -374,6 +381,7 @@ languageHyphenator s = case s of
   Kurmanji -> kurmanji
   Lao -> lao
   Latin -> latin
+  Latin_Classic -> latin_Classic
   Latvian -> latvian
   Lithuanian -> lithuanian
   Malayalam -> malayalam
