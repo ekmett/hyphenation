@@ -1,3 +1,7 @@
+0.5
+-----
+* Added support for classic Latin and Georgian. Updated language patterns to match `hyph-utf8` version #687 2014-10-13.
+
 0.4.2.1
 -------
 * `filepath` 1.4 support
