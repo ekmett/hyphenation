@@ -9,7 +9,7 @@ maintainer:    Edward A. Kmett <ekmett@gmail.com>
 stability:     provisional
 homepage:      http://github.com/ekmett/hyphenation
 bug-reports:   http://github.com/ekmett/hyphenation/issues
-copyright:     (C) 2012 Edward A. Kmett
+copyright:     (C) 2012-2015 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
 description:
   Configurable Knuth-Liang hyphenation
