@@ -258,7 +258,7 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
  estonian, ethiopic, {- farsi, -} finnish, friulan, galician, georgian, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
- indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic
+ indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
  norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
