@@ -84,6 +84,4 @@ test-suite doctests
     hyphenation,
     unordered-containers
   ghc-options: -Wall -threaded
-  if impl(ghc < 7.6)
-    ghc-options: -Werror
   hs-source-dirs: tests
