@@ -1,9 +1,12 @@
+{-# LANGUAGE CPP #-}
 module Main where
 
 import Test.DocTest
 import System.Directory
 import System.FilePath
+#if __GLASGOW_HASKELL__ < 710
 import Control.Applicative
+#endif
 import Control.Monad
 import Data.List
 
