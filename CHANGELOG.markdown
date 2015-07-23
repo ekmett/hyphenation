@@ -1,3 +1,7 @@
+0.6
+---
+* Applied `gzip` to the internal data files. This shrinks the resulting library and any statically linked executable by about a meg and a half.
+
 0.5
 -----
 * Added support for classic Latin and Georgian. Updated language patterns to match `hyph-utf8` version #687 2014-10-13.

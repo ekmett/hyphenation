@@ -37,25 +37,28 @@ module Text.Hyphenation.Language
   , languageAffix
   ) where
 
+import Codec.Compression.GZip
 import Data.Maybe (fromMaybe)
 import qualified Data.IntMap as IM
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe
+import Data.ByteString.Lazy.Char8 as Char8
+import Data.ByteString.Lazy as Lazy
+
 #if !EMBED
 import Paths_hyphenation
 #else
 import Data.FileEmbed
 import Control.Arrow (second)
-import Data.ByteString.Char8 (unpack)
 
-hyphenatorFiles :: [(FilePath, String)]
-hyphenatorFiles = map (second unpack) $(embedDir "data")
+hyphenatorFiles :: [(FilePath, Strict.ByteString)]
+hyphenatorFiles = $(embedDir "data")
 #endif
 
 chrLine :: String -> [(Int, Char)]
-chrLine (x:xs) = map (\y -> (fromEnum y, x)) xs
+chrLine (x:xs) = fmap (\y -> (fromEnum y, x)) xs
 chrLine [] = []
 
 -- | Read a built-in language file from the data directory where cabal installed this package.
@@ -65,18 +68,18 @@ chrLine [] = []
 loadHyphenator :: String -> IO Hyphenator
 #if !EMBED
 loadHyphenator language = do
-  hyp <- getDataFileName ("hyph-" ++ language ++ ".hyp.txt") >>= readFile
-  pat <- getDataFileName ("hyph-" ++ language ++ ".pat.txt") >>= readFile
-  chr <- getDataFileName ("hyph-" ++ language ++ ".chr.txt") >>= readFile
-  let chrMap = IM.fromList (lines chr >>= chrLine)
+  hyp <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".hyp.txt.gz") >>= Lazy.readFile)
+  pat <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".pat.txt.gz") >>= Lazy.readFile)
+  chr <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".chr.txt.gz") >>= Lazy.readFile)
+  let chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
       tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
   return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
 #else
 loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
-  where Just hyp = lookup ("hyph-" ++ language ++ ".hyp.txt") hyphenatorFiles
-        Just pat = lookup ("hyph-" ++ language ++ ".pat.txt") hyphenatorFiles
-        Just chr = lookup ("hyph-" ++ language ++ ".chr.txt") hyphenatorFiles
-        chrMap = IM.fromList (lines chr >>= chrLine)
+  where Just hyp = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".hyp.txt.gz") hyphenatorFiles
+        Just pat = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".pat.txt.gz") hyphenatorFiles
+        Just chr = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".chr.txt.gz") hyphenatorFiles
+        chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
         tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
 #endif
 

@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.5
+version:       0.6
 license:       BSD3
 cabal-version: >= 1.8
 license-file:  LICENSE
@@ -32,7 +32,7 @@ description:
 build-type:    Simple
 
 data-dir:      data
-data-files:    *.hyp.txt, *.pat.txt, *.lic.txt, *.chr.txt
+data-files:    *.hyp.txt.gz, *.pat.txt.gz, *.lic.txt.gz, *.chr.txt.gz
 extra-source-files: .travis.yml CHANGELOG.markdown HLint.hs
 
 source-repository head
@@ -49,13 +49,13 @@ Flag Embed
 library
   build-depends:
     base                 >= 4       && < 5,
+    bytestring           >= 0.9.4   && < 0.11,
     containers           >= 0.3.0.0 && < 0.6,
-    unordered-containers >= 0.2.1   && < 0.3
+    unordered-containers >= 0.2.1   && < 0.3,
+    zlib                 >= 0.5     && < 0.7
 
   if flag(embed)
-    build-depends:
-      file-embed           >= 0.0.7   && < 0.1,
-      bytestring           >= 0.9.4   && < 0.11
+    build-depends: file-embed >= 0.0.7 && < 0.1
     CPP-Options: "-DEMBED"
 
   exposed-modules:
