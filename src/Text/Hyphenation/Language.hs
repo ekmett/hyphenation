@@ -1,5 +1,5 @@
 {-# LANGUAGE CPP #-}
-#if defined(__GLASGOW_HASKELL__) && __GLASGOW_HASKELL__ >= 702
+#if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE Trustworthy #-}
 #endif
 #if EMBED
@@ -38,6 +38,9 @@ module Text.Hyphenation.Language
   ) where
 
 import Codec.Compression.GZip
+#if __GLASGOW_HASKELL__ < 710
+import Data.Functor ((<$>))
+#endif
 import Data.Maybe (fromMaybe)
 import qualified Data.IntMap as IM
 import Text.Hyphenation.Hyphenator
