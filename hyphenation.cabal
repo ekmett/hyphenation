@@ -41,7 +41,7 @@ source-repository head
 
 Flag Embed
   Description: Embed data in library binary
-               (Warning: This increases the executable size by about 3Mbs unless
+               (Warning: This increases the executable size by about 1Mb unless
                          unneeded language data files are manually removed from
                          the "data" directory before compiling)
   Default:     False
