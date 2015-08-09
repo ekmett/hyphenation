@@ -1,7 +1,7 @@
 hyphenation
 ===========
 
-[![Hackage](https://img.shields.io/hackage/v/hyphenation.svg)](https://hackage.haskell.org/package/hyphenation) [![Build Status](https://secure.travis-ci.org/ekmett/hyphenation.png?branch=master)](http://travis-ci.org/ekmett/hyphenation
+[![Hackage](https://img.shields.io/hackage/v/hyphenation.svg)](https://hackage.haskell.org/package/hyphenation) [![Build Status](https://secure.travis-ci.org/ekmett/hyphenation.png?branch=master)](http://travis-ci.org/ekmett/hyphenation)
 
 Configurable Knuth-Liang hyphenation using the UTF8 encoded hyphenation patterns provided by [hyph-utf8](http://www.ctan.org/tex-archive/language/hyph-utf8)
 
