@@ -41,7 +41,6 @@ import Codec.Compression.GZip
 #if __GLASGOW_HASKELL__ < 710
 import Data.Functor ((<$>))
 #endif
-import Data.Maybe (fromMaybe)
 import qualified Data.IntMap as IM
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
@@ -75,7 +74,7 @@ loadHyphenator language = do
   pat <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".pat.txt.gz") >>= Lazy.readFile)
   chr <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".chr.txt.gz") >>= Lazy.readFile)
   let chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
-      tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
+      tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
   return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
 #else
 loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
@@ -83,7 +82,7 @@ loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (par
         Just pat = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".pat.txt.gz") hyphenatorFiles
         Just chr = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".chr.txt.gz") hyphenatorFiles
         chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
-        tryLookup x = fromMaybe x $ IM.lookup (fromEnum x) chrMap
+        tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
 #endif
 
 -- | A strongly typed set of available languages you can use for hyphenation.
