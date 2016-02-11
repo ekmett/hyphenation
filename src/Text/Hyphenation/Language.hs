@@ -27,7 +27,7 @@ module Text.Hyphenation.Language
   , coptic, croatian, czech, danish, dutch, english_US, english_GB, esperanto
   , estonian, ethiopic, {- farsi, -} finnish, french, friulan, galician, georgian, german_1901, german_1996
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
-  , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic
+  , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latin_Classic
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
   , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
@@ -123,7 +123,6 @@ data Language
   | Italian
   | Kannada
   | Kurmanji
-  | Lao
   | Latin
   | Latin_Classic
   | Latvian
@@ -199,7 +198,6 @@ languageAffix s = case s of
   Italian -> "it"
   Kannada -> "kn"
   Kurmanji -> "kmr"
-  Lao -> "lo"
   Latin -> "la"
   Latin_Classic -> "la-x-classic"
   Latvian -> "lv"
@@ -264,7 +262,7 @@ afrikaans, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
  estonian, ethiopic, {- farsi, -} finnish, friulan, galician, georgian, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
- indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, latin_Classic,
+ indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latin_Classic,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
  norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
@@ -309,7 +307,6 @@ irish = unsafePerformIO (loadHyphenator (languageAffix Irish))
 italian = unsafePerformIO (loadHyphenator (languageAffix Italian))
 kannada = unsafePerformIO (loadHyphenator (languageAffix Kannada))
 kurmanji = unsafePerformIO (loadHyphenator (languageAffix Kurmanji))
-lao = unsafePerformIO (loadHyphenator (languageAffix Lao))
 latin = unsafePerformIO (loadHyphenator (languageAffix Latin))
 latin_Classic = unsafePerformIO (loadHyphenator (languageAffix Latin_Classic))
 latvian = unsafePerformIO (loadHyphenator (languageAffix Latvian))
@@ -385,7 +382,6 @@ languageHyphenator s = case s of
   Italian -> italian
   Kannada -> kannada
   Kurmanji -> kurmanji
-  Lao -> lao
   Latin -> latin
   Latin_Classic -> latin_Classic
   Latvian -> latvian
