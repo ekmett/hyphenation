@@ -1,3 +1,9 @@
+0.7
+---
+* Updated Spanish and Thai hyphenation patterns.
+* Removed Lao patterns until higher quality patterns are available.
+* Updated the licenses associated with many patterns
+
 0.6
 ---
 * Applied `gzip` to the internal data files. This shrinks the resulting library and any statically linked executable by about a meg and a half.

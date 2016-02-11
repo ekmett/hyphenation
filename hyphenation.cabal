@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.6
+version:       0.7
 license:       BSD3
 cabal-version: >= 1.8
 license-file:  LICENSE
@@ -9,9 +9,9 @@ maintainer:    Edward A. Kmett <ekmett@gmail.com>
 stability:     provisional
 homepage:      http://github.com/ekmett/hyphenation
 bug-reports:   http://github.com/ekmett/hyphenation/issues
-copyright:     (C) 2012-2015 Edward A. Kmett
+copyright:     (C) 2012-2016 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
-tested-with:   GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.1
+tested-with:   GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.1
 description:
   Configurable Knuth-Liang hyphenation
   .
