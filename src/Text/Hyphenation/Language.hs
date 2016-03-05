@@ -23,13 +23,13 @@ module Text.Hyphenation.Language
     Language(..)
   , languageHyphenator
   -- * Provided language hyphenators
-  , afrikaans, basque, bengali, bulgarian, catalan, chinese
+  , afrikaans, armenian, assamese, basque, bengali, bulgarian, catalan, chinese
   , coptic, croatian, czech, danish, dutch, english_US, english_GB, esperanto
   , estonian, ethiopic, {- farsi, -} finnish, french, friulan, galician, georgian, german_1901, german_1996
   , german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian
   , icelandic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latin_Classic
   , latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal
-  , norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
+  , norwegian_Nynorsk, occitan, oriya, panjabi, piedmontese, polish, portuguese, romanian, romansh
   , russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic
   , serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil
   , telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh
@@ -89,6 +89,8 @@ loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (par
 -- | A strongly typed set of available languages you can use for hyphenation.
 data Language
   = Afrikaans
+  | Armenian
+  | Assamese
   | Basque
   | Bengali
   | Bulgarian
@@ -131,6 +133,7 @@ data Language
   | Marathi
   | Mongolian
   | Norwegian_Bokmal | Norwegian_Nynorsk
+  | Occitan
   | Oriya
   | Panjabi
   | Piedmontese
@@ -161,6 +164,8 @@ data Language
 languageAffix :: Language -> String
 languageAffix s = case s of
   Afrikaans -> "af"
+  Armenian -> "hy"
+  Assamese -> "as"
   Basque -> "eu"
   Bengali -> "bn"
   Bulgarian -> "bg"
@@ -207,6 +212,7 @@ languageAffix s = case s of
   Mongolian -> "mn-cyrl"
   Norwegian_Bokmal  -> "nb"
   Norwegian_Nynorsk -> "nn"
+  Occitan -> "oc"
   Oriya -> "or"
   Panjabi -> "pa"
   Piedmontese -> "pms"
@@ -258,18 +264,20 @@ french :: Hyphenator
 icelandic :: Hyphenator
 
 -- | Hyphenators for a wide array of languages.
-afrikaans, basque, bengali, bulgarian, catalan, chinese,
+afrikaans, armenian, assamese, basque, bengali, bulgarian, catalan, chinese,
  coptic, croatian, czech, danish, dutch, esperanto,
  estonian, ethiopic, {- farsi, -} finnish, friulan, galician, georgian, german_1901, german_1996,
  german_Swiss, greek_Ancient, greek_Mono, greek_Poly, gujarati, hindi, hungarian,
  indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latin_Classic,
  latvian, lithuanian, malayalam, marathi, mongolian, norwegian_Bokmal,
- norwegian_Nynorsk, oriya, panjabi, piedmontese, polish, portuguese, romanian,
+ norwegian_Nynorsk, occitan, oriya, panjabi, piedmontese, polish, portuguese, romanian,
  romansh, russian, sanskrit, serbian_Cyrillic, serbocroatian_Cyrillic,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
  telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
 
 afrikaans = unsafePerformIO (loadHyphenator (languageAffix Afrikaans))
+armenian = unsafePerformIO (loadHyphenator (languageAffix Armenian))
+assamese = unsafePerformIO (loadHyphenator (languageAffix Assamese))
 basque = unsafePerformIO (loadHyphenator (languageAffix Basque))
 bengali = unsafePerformIO (loadHyphenator (languageAffix Bengali))
 bulgarian = unsafePerformIO (loadHyphenator (languageAffix Bulgarian))
@@ -316,6 +324,7 @@ marathi = unsafePerformIO (loadHyphenator (languageAffix Marathi))
 mongolian = unsafePerformIO (loadHyphenator (languageAffix Mongolian))
 norwegian_Bokmal = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Bokmal))
 norwegian_Nynorsk = unsafePerformIO (loadHyphenator (languageAffix Norwegian_Nynorsk))
+occitan = unsafePerformIO (loadHyphenator (languageAffix Occitan))
 oriya = unsafePerformIO (loadHyphenator (languageAffix Oriya))
 panjabi = unsafePerformIO (loadHyphenator (languageAffix Panjabi))
 piedmontese = unsafePerformIO (loadHyphenator (languageAffix Piedmontese))
@@ -345,6 +354,8 @@ welsh = unsafePerformIO (loadHyphenator (languageAffix Welsh))
 languageHyphenator :: Language -> Hyphenator
 languageHyphenator s = case s of
   Afrikaans -> afrikaans
+  Armenian -> armenian
+  Assamese -> assamese
   Basque -> basque
   Bengali -> bengali
   Bulgarian -> bulgarian
@@ -391,6 +402,7 @@ languageHyphenator s = case s of
   Mongolian -> mongolian
   Norwegian_Bokmal  -> norwegian_Bokmal
   Norwegian_Nynorsk -> norwegian_Nynorsk
+  Occitan -> occitan
   Oriya -> oriya
   Panjabi -> panjabi
   Piedmontese -> piedmontese
