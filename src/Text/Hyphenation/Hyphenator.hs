@@ -14,25 +14,10 @@ module Text.Hyphenation.Hyphenator
   ( Hyphenator(..)
   -- * Hyphenate with a given set of patterns
   , hyphenate
-  , defaultLeftMin
-  , defaultRightMin
   ) where
 
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
-
--- | By default, do not insert hyphens in the first two characters
---
--- >>> defaultLeftMin
--- 2
-defaultLeftMin :: Int
-defaultLeftMin = 2
--- | By default, do not insert hyphens in the last three characters.
---
--- >>> defaultRightMin
--- 3
-defaultRightMin :: Int
-defaultRightMin = 3
 
 -- | A @Hyphenator@ is combination of an alphabet normalization scheme, a set of 'Patterns', a set of 'Exceptions' to those patterns
 -- and a number of characters at each end to skip hyphenating.
