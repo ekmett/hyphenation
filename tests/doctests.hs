@@ -1,22 +1,21 @@
-{-# LANGUAGE CPP #-}
 module Main where
 
-import Test.DocTest
-import System.Directory
-import System.FilePath
-#if __GLASGOW_HASKELL__ < 710
+import Build_doctests (autogen_dir, deps)
 import Control.Applicative
-#endif
 import Control.Monad
 import Data.List
+import System.Directory
+import System.FilePath
+import Test.DocTest
 
 main :: IO ()
 main = getSources >>= \sources -> doctest $
     "-isrc"
-  : "-idist/build/autogen"
+  : ("-i" ++ autogen_dir)
   : "-optP-include"
-  : "-optPdist/build/autogen/cabal_macros.h"
-  : sources
+  : ("-optP" ++ autogen_dir ++ "/cabal_macros.h")
+  : "-hide-all-packages"
+  : map ("-package="++) deps ++ sources
 
 getSources :: IO [FilePath]
 getSources = filter (isSuffixOf ".hs") <$> go "src"
