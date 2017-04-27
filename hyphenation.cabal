@@ -55,7 +55,7 @@ Flag Embed
 library
   build-depends:
     base                 >= 4       && < 5,
-    bytestring           >= 0.9.4   && < 0.11,
+    bytestring           >= 0.9     && < 0.11,
     containers           >= 0.3.0.0 && < 0.6,
     unordered-containers >= 0.2.1   && < 0.3,
     zlib                 >= 0.5     && < 0.7
@@ -72,6 +72,7 @@ library
    Text.Hyphenation.Pattern
 
   other-modules:
+   Text.Hyphenation.ByteStringLazyCompat
    Paths_hyphenation
 
   hs-source-dirs: src

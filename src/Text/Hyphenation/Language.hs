@@ -42,12 +42,12 @@ import Codec.Compression.GZip
 import Data.Functor ((<$>))
 #endif
 import qualified Data.IntMap as IM
+import Text.Hyphenation.ByteStringLazyCompat as Lazy
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe
 import Data.ByteString.Lazy.Char8 as Char8
-import Data.ByteString.Lazy as Lazy
 
 #if !EMBED
 import Paths_hyphenation
