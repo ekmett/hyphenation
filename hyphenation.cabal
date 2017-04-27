@@ -85,9 +85,7 @@ test-suite doctests
   build-depends:
     base,
     containers,
-    directory >= 1.0 && < 1.4,
-    doctest   >= 0.8 && < 0.12,
-    filepath  >= 1.3 && < 1.5,
+    doctest >= 0.11.2 && < 0.12,
     hyphenation,
     unordered-containers
   ghc-options: -Wall -threaded
