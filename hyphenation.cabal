@@ -90,7 +90,7 @@ test-suite doctests
   build-depends:
     base,
     containers,
-    doctest >= 0.11.2 && < 0.13,
+    doctest >= 0.11.2 && < 0.14,
     hyphenation,
     unordered-containers
   ghc-options: -Wall -threaded
