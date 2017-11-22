@@ -11,7 +11,7 @@ homepage:      http://github.com/ekmett/hyphenation
 bug-reports:   http://github.com/ekmett/hyphenation/issues
 copyright:     (C) 2012-2016 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
-tested-with:   GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
+tested-with:   GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.2
 description:
   Configurable Knuth-Liang hyphenation
   .
