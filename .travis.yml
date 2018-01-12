@@ -69,7 +69,7 @@ matrix:
     - compiler: "ghc-8.2.2"
     # env: TEST=--disable-tests BENCH=--disable-benchmarks
       env: CABALFLAGS=-fembed
-      addons: {apt: {packages: [ghc-ppa-tools,cabal-install-2.0,ghc-8.2.2], sources: [hvr-ghc]}}
+      addons: {apt: {packages: [*apt_packages,cabal-install-2.0,ghc-8.2.2], sources: [hvr-ghc]}}
     - compiler: "ghc-8.4.1"
       env: GHCHEAD=true
       addons: {apt: {packages: [*apt_packages,cabal-install-head,ghc-8.4.1], sources: [hvr-ghc]}}
