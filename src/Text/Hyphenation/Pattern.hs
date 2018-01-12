@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.Pattern
@@ -20,7 +22,8 @@ module Text.Hyphenation.Pattern
   ) where
 
 import qualified Data.IntMap as IM
-import Data.Monoid
+import Data.Monoid (Monoid(..))
+import Data.Semigroup (Semigroup(..))
 import Prelude hiding (lookup)
 import Data.Char (digitToInt, isDigit)
 
@@ -28,9 +31,14 @@ import Data.Char (digitToInt, isDigit)
 data Patterns = Patterns [Int] (IM.IntMap Patterns)
   deriving Show
 
+instance Semigroup Patterns where
+  Patterns ps m <> Patterns qs n = Patterns (zipMax ps qs) (IM.unionWith mappend m n)
+
 instance Monoid Patterns where
   mempty = Patterns [] IM.empty
-  Patterns ps m `mappend` Patterns qs n = Patterns (zipMax ps qs) (IM.unionWith mappend m n)
+#if !(MIN_VERSION_base(4,11,0))
+  mappend = (<>)
+#endif
 
 -- | Tallies the hyphenation scores for a word considering all tails.
 lookupPattern :: String -> Patterns -> [Int]

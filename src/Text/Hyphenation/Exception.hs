@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.Exception
@@ -20,7 +22,8 @@ module Text.Hyphenation.Exception
   ) where
 
 import qualified Data.HashMap.Strict as HM
-import Data.Monoid
+import Data.Monoid (Monoid(..))
+import Data.Semigroup (Semigroup(..))
 import Prelude hiding (lookup)
 
 -- | Hyphenation exceptions are special cases that should use the specified hyphenation points.
@@ -33,9 +36,16 @@ zipMin _ _ = []
 
 -- | Exceptions permit an exact list of hyphenation locations
 -- but merging exceptions is used to restrict the set when both contain the same word
+instance Semigroup Exceptions where
+  Exceptions m <> Exceptions n = Exceptions (HM.unionWith zipMin m n)
+
+-- | Exceptions permit an exact list of hyphenation locations
+-- but merging exceptions is used to restrict the set when both contain the same word
 instance Monoid Exceptions where
   mempty = Exceptions mempty
-  Exceptions m `mappend` Exceptions n = Exceptions (HM.unionWith zipMin m n)
+#if !(MIN_VERSION_base(4,11,0))
+  mappend = (<>)
+#endif
 
 -- | add an exception to the exception table.
 -- if it is already present, this will restrict the set of hyphenations to the

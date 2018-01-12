@@ -1,3 +1,7 @@
+next
+----
+* Add `Semigroup` instances for `Exceptions` and `Patterns`.
+
 0.7
 ---
 * Updated Spanish and Thai hyphenation patterns.
