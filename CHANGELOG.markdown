@@ -1,6 +1,7 @@
 next
 ----
 * Add `Semigroup` instances for `Exceptions` and `Patterns`.
+* Fix the build with `-fembed`.
 
 0.7
 ---

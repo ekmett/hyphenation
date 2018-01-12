@@ -53,7 +53,7 @@ import Data.ByteString.Lazy.Char8 as Char8
 import Paths_hyphenation
 #else
 import Data.FileEmbed
-import Control.Arrow (second)
+import qualified Data.ByteString.Char8 as Strict
 
 hyphenatorFiles :: [(FilePath, Strict.ByteString)]
 hyphenatorFiles = $(embedDir "data")
