@@ -1,5 +1,5 @@
-next
-----
+0.7.1 [2018.01.18]
+------------------
 * Add `Semigroup` instances for `Exceptions` and `Patterns`.
 * Fix the build with `-fembed`.
 

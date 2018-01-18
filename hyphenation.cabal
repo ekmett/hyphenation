@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.7
+version:       0.7.1
 license:       BSD2
 cabal-version: >= 1.8
 license-file:  LICENSE
