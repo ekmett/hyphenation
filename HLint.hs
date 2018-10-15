@@ -1,1 +1,2 @@
-ignore "use camelCase"
+ignore "Use camelCase"
+ignore "Missing NOINLINE pragma"

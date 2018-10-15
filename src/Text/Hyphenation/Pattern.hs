@@ -75,7 +75,7 @@ parsePatterns :: String -> Patterns
 parsePatterns = foldr insertPattern mempty . lines
 
 chars :: String -> String
-chars = filter (\x -> (x < '0' || x > '9'))
+chars = filter (\x -> x < '0' || x > '9')
 
 -- | Convert a Pattern string to a Score
 scorePattern :: String -> [Int]
