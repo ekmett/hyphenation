@@ -42,12 +42,13 @@ import Codec.Compression.GZip
 import Data.Functor ((<$>))
 #endif
 import qualified Data.IntMap as IM
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
 import Text.Hyphenation.ByteStringLazyCompat as Lazy
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
 import System.IO.Unsafe
-import Data.ByteString.Lazy.Char8 as Char8
 
 #if !EMBED
 import Paths_hyphenation
@@ -70,20 +71,24 @@ chrLine [] = []
 loadHyphenator :: String -> IO Hyphenator
 #if !EMBED
 loadHyphenator language = do
-  hyp <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".hyp.txt.gz") >>= Lazy.readFile)
-  pat <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".pat.txt.gz") >>= Lazy.readFile)
-  chr <- Char8.unpack . decompress <$> (getDataFileName ("hyph-" ++ language ++ ".chr.txt.gz") >>= Lazy.readFile)
+  hyp <- unzipUtf8 <$> (getDataFileName ("hyph-" ++ language ++ ".hyp.txt.gz") >>= Lazy.readFile)
+  pat <- unzipUtf8 <$> (getDataFileName ("hyph-" ++ language ++ ".pat.txt.gz") >>= Lazy.readFile)
+  chr <- unzipUtf8 <$> (getDataFileName ("hyph-" ++ language ++ ".chr.txt.gz") >>= Lazy.readFile)
   let chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
       tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
   return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
 #else
 loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
-  where Just hyp = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".hyp.txt.gz") hyphenatorFiles
-        Just pat = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".pat.txt.gz") hyphenatorFiles
-        Just chr = Char8.unpack . decompress . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".chr.txt.gz") hyphenatorFiles
+  where Just hyp = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".hyp.txt.gz") hyphenatorFiles
+        Just pat = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".pat.txt.gz") hyphenatorFiles
+        Just chr = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ language ++ ".chr.txt.gz") hyphenatorFiles
         chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
         tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
 #endif
+
+unzipUtf8 =
+  T.unpack . T.decodeUtf8With (\ _ -> fmap (toEnum . fromEnum))
+  . Lazy.toStrict . decompress
 
 -- | A strongly typed set of available languages you can use for hyphenation.
 data Language
