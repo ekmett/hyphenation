@@ -157,9 +157,9 @@ script:
   # Constraint sets
   - rm -rf cabal.project.local
   # Constraint set embed
-  - ${CABAL} v2-build -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all
-  - ${CABAL} v2-test -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all
-  - ${CABAL} v2-haddock -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all
+  - if [ $HCNUMVER -ge 70600 ] ; then ${CABAL} v2-build -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all ; fi
+  - if [ $HCNUMVER -ge 70600 ] ; then ${CABAL} v2-test -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all ; fi
+  - if [ $HCNUMVER -ge 70600 ] ; then ${CABAL} v2-haddock -w ${HC} --enable-tests --enable-benchmarks --constraint='hyphenation +embed' all ; fi
 
 # REGENDATA ["--output=.travis.yml","--config=cabal.haskell-ci","cabal.project"]
 # EOF
