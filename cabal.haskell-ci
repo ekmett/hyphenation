@@ -7,6 +7,9 @@ hlint-options:          --cpp-ansi --cpp-define=HLINT
 irc-channels:           irc.freenode.org#haskell-lens
 
 constraint-set embed
+  -- The test suite fails for mysterious reasons with -fembed on old GHCs. See
+  -- https://travis-ci.org/ekmett/hyphenation/jobs/503116544#L913
+  ghc:         >=7.6
   constraints: hyphenation +embed
   tests:       True
   run-tests:   True
