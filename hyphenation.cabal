@@ -76,7 +76,7 @@ library
     zlib                 >= 0.5     && < 0.7
 
   if !impl(ghc>=7.11)
-    build-depends: semigroups >= 0.16 && < 0.19
+    build-depends: semigroups >= 0.16 && < 0.20
 
   if flag(embed)
     build-depends: file-embed >= 0.0.7 && < 0.1
