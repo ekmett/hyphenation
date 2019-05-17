@@ -86,6 +86,7 @@ loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (par
         tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
 #endif
 
+unzipUtf8 :: ByteString -> String
 unzipUtf8 =
   T.unpack . T.decodeUtf8With (\ _ -> fmap (toEnum . fromEnum))
   . Lazy.toStrict . decompress
