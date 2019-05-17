@@ -11,10 +11,7 @@ homepage:      http://github.com/ekmett/hyphenation
 bug-reports:   http://github.com/ekmett/hyphenation/issues
 copyright:     (C) 2012-2016 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
-tested-with:   GHC == 7.0.4
-             , GHC == 7.2.2
-             , GHC == 7.4.2
-             , GHC == 7.6.3
+tested-with:   GHC == 7.6.3
              , GHC == 7.8.4
              , GHC == 7.10.3
              , GHC == 8.0.2
@@ -52,7 +49,7 @@ extra-source-files:
 
 custom-setup
   setup-depends:
-    base          >= 4.3 && <5,
+    base          >= 4.6.0.1 && <5,
     Cabal         >= 1.10,
     cabal-doctest >= 1 && <1.1
 
