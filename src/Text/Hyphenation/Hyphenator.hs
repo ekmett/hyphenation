@@ -47,12 +47,12 @@ data Hyphenator = Hyphenator
 -- | Using a 'Hyphenator', compute the score of a string.
 hyphenationScore :: Hyphenator -> String -> [Int]
 hyphenationScore (Hyphenator nf ps es l r) s
-  | l + r >= n = replicate (n + 1) 0
+  | l + r > n = replicate (n + 1) 0
   | otherwise = case lookupException ls es of
     Just pts -> trim pts
     Nothing -> trim (lookupPattern ls ps)
   where
-    trim result = replicate l 0 ++ take (n - l - r) (drop l result)
+    trim result = replicate l 0 ++ take (n - l - r + 1) (drop l result)
     n  = length s
     ls = map nf s
 
