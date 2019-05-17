@@ -1,3 +1,11 @@
+0.8
+---
+* Per-language default hyphenation minimums
+* Correct handling of UTF-8 language definitions, such as Russian.
+* `loadHyphenator` now takes a `Language` rather than the string for its affix.
+* Updated language files.
+* Added Armenian, Assamese, and Occitan.
+
 0.7.1 [2018.01.18]
 ------------------
 * Add `Semigroup` instances for `Exceptions` and `Patterns`.
