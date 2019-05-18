@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Text.Hyphenation.ByteStringLazyCompat
--- Copyright   :  (C) 2012-2015 Edward Kmett,
+-- Copyright   :  (C) 2012-2019 Edward Kmett,
 --                (C) 2007 Ned Batchelder
 -- License     :  BSD-style (see the languageAffix LICENSE)
 --
