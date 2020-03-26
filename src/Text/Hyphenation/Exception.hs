@@ -22,9 +22,15 @@ module Text.Hyphenation.Exception
   ) where
 
 import qualified Data.HashMap.Strict as HM
-import Data.Monoid (Monoid(..))
-import Data.Semigroup (Semigroup(..))
 import Prelude hiding (lookup)
+
+#if !(MIN_VERSION_base(4,8,0))
+import Data.Monoid (Monoid(..))
+#endif
+
+#if !(MIN_VERSION_base(4,11,0))
+import Data.Semigroup (Semigroup(..))
+#endif
 
 -- | Hyphenation exceptions are special cases that should use the specified hyphenation points.
 newtype Exceptions = Exceptions (HM.HashMap String [Int])

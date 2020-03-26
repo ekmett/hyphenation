@@ -22,10 +22,16 @@ module Text.Hyphenation.Pattern
   ) where
 
 import qualified Data.IntMap as IM
-import Data.Monoid (Monoid(..))
-import Data.Semigroup (Semigroup(..))
 import Prelude hiding (lookup)
 import Data.Char (digitToInt, isDigit)
+
+#if !(MIN_VERSION_base(4,8,0))
+import Data.Monoid (Monoid(..))
+#endif
+
+#if !(MIN_VERSION_base(4,11,0))
+import Data.Semigroup (Semigroup(..))
+#endif
 
 -- | Hyphenation patterns
 data Patterns = Patterns [Int] (IM.IntMap Patterns)
