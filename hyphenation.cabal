@@ -2,7 +2,7 @@ name:          hyphenation
 category:      Text
 version:       0.8
 license:       BSD2
-cabal-version: >= 1.8
+cabal-version: >= 1.10
 license-file:  LICENSE
 author:        Edward A. Kmett
 maintainer:    Edward A. Kmett <ekmett@gmail.com>
@@ -94,6 +94,7 @@ library
 
   hs-source-dirs: src
   ghc-options: -Wall
+  default-language: Haskell2010
 
 -- Verify the results of the examples
 test-suite doctests
@@ -107,3 +108,4 @@ test-suite doctests
     unordered-containers
   ghc-options: -Wall -threaded
   hs-source-dirs: tests
+  default-language: Haskell2010
