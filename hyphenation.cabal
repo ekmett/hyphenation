@@ -43,7 +43,6 @@ data-dir:      data
 data-files:    *.hyp.txt.gz, *.pat.txt.gz, *.lic.txt.gz, *.chr.txt.gz
 extra-source-files:
   .hlint.yaml
-  .travis.yml
   CHANGELOG.markdown
   README.markdown
   Warning.hs
