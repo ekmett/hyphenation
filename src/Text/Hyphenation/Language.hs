@@ -60,6 +60,9 @@ hyphenatorFiles :: [(FilePath, Strict.ByteString)]
 hyphenatorFiles = $(embedDir "data")
 #endif
 
+-- $setup
+-- >>> import Text.Hyphenation.Hyphenator
+
 chrLine :: String -> [(Int, Char)]
 chrLine (x:xs) = fmap (\y -> (fromEnum y, x)) xs
 chrLine [] = []
