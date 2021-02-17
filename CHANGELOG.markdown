@@ -5,8 +5,8 @@
   [`cabal-docspec`](https://github.com/phadej/cabal-extras/tree/master/cabal-docspec)
   to run the doctests.
 
-0.8
----
+0.8 [2019.05.18]
+----------------
 * Per-language default hyphenation minimums
 * Correct handling of UTF-8 language definitions, such as Russian.
 * `loadHyphenator` now takes a `Language` rather than the string for its affix.
