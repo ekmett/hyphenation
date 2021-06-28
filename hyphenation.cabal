@@ -1,6 +1,6 @@
 name:          hyphenation
 category:      Text
-version:       0.8.1
+version:       0.8.2
 license:       BSD2
 cabal-version: >= 1.10
 license-file:  LICENSE
@@ -56,7 +56,7 @@ Flag Embed
                (Warning: This increases the executable size by about 1Mb unless
                          unneeded language data files are manually removed from
                          the "data" directory before compiling)
-  Default:     False
+  Default:     True
 
 library
   build-depends:
