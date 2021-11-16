@@ -68,7 +68,7 @@ library
     text
 
   if !impl(ghc>=7.11)
-    build-depends: semigroups >= 0.16 && < 0.20
+    build-depends: semigroups >= 0.16 && < 0.21
 
   if flag(embed)
     build-depends: file-embed >= 0.0.7 && < 0.1
