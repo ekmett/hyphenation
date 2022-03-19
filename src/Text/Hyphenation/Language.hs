@@ -85,9 +85,13 @@ loadHyphenator language = do
 #else
 loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (parseExceptions hyp) defaultLeftMin defaultRightMin
   where affix = languageAffix language
-        Just hyp = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ affix ++ ".hyp.txt.gz") hyphenatorFiles
-        Just pat = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ affix ++ ".pat.txt.gz") hyphenatorFiles
-        Just chr = unzipUtf8 . Lazy.fromStrict <$> lookup ("hyph-" ++ affix ++ ".chr.txt.gz") hyphenatorFiles
+        lookupHyphenatorFile fileName =
+          case lookup fileName hyphenatorFiles of
+            Just contents -> contents
+            Nothing       -> error $ "Could not find " ++ fileName
+        hyp = unzipUtf8 $ Lazy.fromStrict $ lookupHyphenatorFile $ "hyph-" ++ affix ++ ".hyp.txt.gz"
+        pat = unzipUtf8 $ Lazy.fromStrict $ lookupHyphenatorFile $ "hyph-" ++ affix ++ ".pat.txt.gz"
+        chr = unzipUtf8 $ Lazy.fromStrict $ lookupHyphenatorFile $ "hyph-" ++ affix ++ ".chr.txt.gz"
         chrMap = IM.fromList (Prelude.lines chr >>= chrLine)
         (defaultLeftMin, defaultRightMin) = languageMins language
         tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
