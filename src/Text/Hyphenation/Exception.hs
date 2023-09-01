@@ -68,7 +68,9 @@ lookupException s (Exceptions m) = HM.lookup s m
 scoreException :: String -> [Int]
 scoreException []         = [0]
 scoreException (x:ys)
-  | x == '-'  = 1 : if null ys then [] else scoreException (tail ys)
+  | x == '-'  = 1 : case ys of
+                      []    -> []
+                      _:ys' -> scoreException ys'
   | otherwise = 0 : scoreException ys
 
 -- | Parse one exception per line from an input string

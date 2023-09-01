@@ -52,7 +52,12 @@ hyphenationScore (Hyphenator nf ps es l r) s
 -- >>> hyphenate english_US "hyphenation"
 -- ["hy","phen","ation"]
 hyphenate :: Hyphenator -> String -> [String]
-hyphenate h s0 = go [] s0 $ tail $ hyphenationScore h s0 where
+hyphenate h s0 = go [] s0 score' where
+  score' =
+    case hyphenationScore h s0 of
+      _:ps -> ps
+      []   -> error $ "Malformed hyphenation score for " ++ s0
+
   go acc (w:ws) (p:ps)
     | odd p     = reverse (w:acc) : go [] ws ps
     | otherwise = go (w:acc) ws ps

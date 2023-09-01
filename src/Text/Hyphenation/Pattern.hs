@@ -48,7 +48,17 @@ instance Monoid Patterns where
 
 -- | Tallies the hyphenation scores for a word considering all tails.
 lookupPattern :: String -> Patterns -> [Int]
-lookupPattern xs0 = init . tail . go ('.' : xs0 ++ ".") where
+lookupPattern xs0 p = scores1 where
+  scores0 =
+    case go ('.' : xs0 ++ ".") p of
+      _:ys -> ys
+      [] -> error $ "lookupPattern.scores0: Impossible (" ++ xs0 ++ ")"
+
+  scores1 =
+    case unsnoc scores0 of
+      Just (ys, _) -> ys
+      Nothing -> error $ "lookupPattern.scores1: Impossible (" ++ xs0 ++ ")"
+
   go [] (Patterns ys _) = ys
   go xxs@(_:xs) t = zipMax (go1 xxs t) (0:go xs t)
   go1 [] (Patterns ys _) = ys
@@ -87,7 +97,9 @@ chars = filter (\x -> x < '0' || x > '9')
 scorePattern :: String -> [Int]
 scorePattern [] = [0]
 scorePattern (x:ys)
-  | isDigit x = digitToInt x : if null ys then [] else scorePattern (tail ys)
+  | isDigit x = digitToInt x : case ys of
+                                 []    -> []
+                                 _:ys' -> scorePattern ys'
   | otherwise = 0 : scorePattern ys
 
 -- | Zip two scores.
@@ -96,3 +108,9 @@ zipMax (x:xs) (y:ys) = max x y : zipMax xs ys
 zipMax [] ys = ys
 zipMax xs [] = xs
 
+-- | Decompose a list into 'init' and 'last'.
+unsnoc :: [a] -> Maybe ([a], a)
+unsnoc []     = Nothing
+unsnoc (x:xs) = case unsnoc xs of
+                  Nothing    -> Just ([], x)
+                  Just (a,b) -> Just (x:a, b)
