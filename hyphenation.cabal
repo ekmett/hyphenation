@@ -11,10 +11,7 @@ homepage:      http://github.com/ekmett/hyphenation
 bug-reports:   http://github.com/ekmett/hyphenation/issues
 copyright:     (C) 2012-2019 Edward A. Kmett
 synopsis:      Configurable Knuth-Liang hyphenation
-tested-with:   GHC == 7.6.3
-             , GHC == 7.8.4
-             , GHC == 7.10.3
-             , GHC == 8.0.2
+tested-with:   GHC == 8.0.2
              , GHC == 8.2.2
              , GHC == 8.4.4
              , GHC == 8.6.5
@@ -64,15 +61,12 @@ Flag Embed
 
 library
   build-depends:
-    base                 >= 4       && < 5,
-    bytestring           >= 0.9     && < 0.13,
-    containers           >= 0.3.0.0 && < 0.9,
-    unordered-containers >= 0.2.1   && < 0.3,
-    zlib                 >= 0.5     && < 0.8,
+    base                 >= 4.9      && < 5,
+    bytestring           >= 0.10.8.1 && < 0.13,
+    containers           >= 0.3.0.0  && < 0.9,
+    unordered-containers >= 0.2.1    && < 0.3,
+    zlib                 >= 0.5      && < 0.8,
     text
-
-  if !impl(ghc>=7.11)
-    build-depends: semigroups >= 0.16 && < 0.21
 
   if flag(embed)
     build-depends: file-embed >= 0.0.7 && < 0.1
@@ -86,7 +80,6 @@ library
    Text.Hyphenation.Pattern
 
   other-modules:
-   Text.Hyphenation.ByteStringLazyCompat
    Paths_hyphenation
 
   hs-source-dirs: src

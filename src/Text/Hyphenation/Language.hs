@@ -1,7 +1,5 @@
 {-# LANGUAGE CPP #-}
-#if __GLASGOW_HASKELL__ >= 702
 {-# LANGUAGE Trustworthy #-}
-#endif
 #if EMBED
 {-# LANGUAGE TemplateHaskell #-}
 #endif
@@ -38,13 +36,10 @@ module Text.Hyphenation.Language
   ) where
 
 import Codec.Compression.GZip
-#if __GLASGOW_HASKELL__ < 710
-import Data.Functor ((<$>))
-#endif
+import qualified Data.ByteString.Lazy as Lazy
 import qualified Data.IntMap as IM
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
-import Text.Hyphenation.ByteStringLazyCompat as Lazy
 import Text.Hyphenation.Hyphenator
 import Text.Hyphenation.Pattern
 import Text.Hyphenation.Exception
@@ -97,7 +92,7 @@ loadHyphenator language = return $ Hyphenator tryLookup (parsePatterns pat) (par
         tryLookup x = IM.findWithDefault x (fromEnum x) chrMap
 #endif
 
-unzipUtf8 :: ByteString -> String
+unzipUtf8 :: Lazy.ByteString -> String
 unzipUtf8 =
   T.unpack . T.decodeUtf8With (\ _ -> fmap (toEnum . fromEnum))
   . Lazy.toStrict . decompress

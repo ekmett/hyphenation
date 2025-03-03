@@ -24,10 +24,6 @@ module Text.Hyphenation.Exception
 import qualified Data.HashMap.Strict as HM
 import Prelude hiding (lookup)
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Monoid (Monoid(..))
-#endif
-
 #if !(MIN_VERSION_base(4,11,0))
 import Data.Semigroup (Semigroup(..))
 #endif

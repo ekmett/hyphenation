@@ -1,3 +1,7 @@
+next [????.??.??]
+-----------------
+* Drop support for pre-8.0 versions of GHC.
+
 0.8.2 [2021.06.28]
 ------------------
 * `Embed` flag is now `True` by default to resolve unexpected issues with standalone applications [#18](https://github.com/ekmett/hyphenation/issues/18)
