@@ -365,79 +365,152 @@ afrikaans, armenian, assamese, basque, bengali, bulgarian, catalan, chinese,
  serbocroatian_Latin, slovak, slovenian, spanish, swedish, tamil,
  telugu, thai, turkish, turkmen, ukrainian, uppersorbian, welsh :: Hyphenator
 
+{-# NOINLINE afrikaans #-}
 afrikaans = unsafePerformIO (loadHyphenator Afrikaans)
+{-# NOINLINE armenian #-}
 armenian = unsafePerformIO (loadHyphenator Armenian)
+{-# NOINLINE assamese #-}
 assamese = unsafePerformIO (loadHyphenator Assamese)
+{-# NOINLINE basque #-}
 basque = unsafePerformIO (loadHyphenator Basque)
+{-# NOINLINE bengali #-}
 bengali = unsafePerformIO (loadHyphenator Bengali)
+{-# NOINLINE bulgarian #-}
 bulgarian = unsafePerformIO (loadHyphenator Bulgarian)
+{-# NOINLINE catalan #-}
 catalan = unsafePerformIO (loadHyphenator Catalan)
+{-# NOINLINE chinese #-}
 chinese = unsafePerformIO (loadHyphenator Chinese)
+{-# NOINLINE coptic #-}
 coptic = unsafePerformIO (loadHyphenator Coptic)
+{-# NOINLINE croatian #-}
 croatian = unsafePerformIO (loadHyphenator Croatian)
+{-# NOINLINE czech #-}
 czech = unsafePerformIO (loadHyphenator Czech)
+{-# NOINLINE danish #-}
 danish = unsafePerformIO (loadHyphenator Danish)
+{-# NOINLINE dutch #-}
 dutch = unsafePerformIO (loadHyphenator Dutch)
+{-# NOINLINE english_US #-}
 english_US = unsafePerformIO (loadHyphenator English_US)
+{-# NOINLINE english_GB #-}
 english_GB = unsafePerformIO (loadHyphenator English_GB)
+{-# NOINLINE esperanto #-}
 esperanto = unsafePerformIO (loadHyphenator Esperanto)
+{-# NOINLINE estonian #-}
 estonian = unsafePerformIO (loadHyphenator Estonian)
+{-# NOINLINE ethiopic #-}
 ethiopic = unsafePerformIO (loadHyphenator Ethiopic)
 -- farsi = unsafePerformIO (loadHyphenator Farsi)
+{-# NOINLINE finnish #-}
 finnish = unsafePerformIO (loadHyphenator Finnish)
+{-# NOINLINE french #-}
 french = unsafePerformIO (loadHyphenator French)
+{-# NOINLINE friulan #-}
 friulan = unsafePerformIO (loadHyphenator Friulan)
+{-# NOINLINE galician #-}
 galician = unsafePerformIO (loadHyphenator Galician)
+{-# NOINLINE georgian #-}
 georgian = unsafePerformIO (loadHyphenator Georgian)
+{-# NOINLINE german_1901 #-}
 german_1901 = unsafePerformIO (loadHyphenator German_1901)
+{-# NOINLINE german_1996 #-}
 german_1996 = unsafePerformIO (loadHyphenator German_1996)
+{-# NOINLINE german_Swiss #-}
 german_Swiss = unsafePerformIO (loadHyphenator German_Swiss)
+{-# NOINLINE greek_Ancient #-}
 greek_Ancient = unsafePerformIO (loadHyphenator Greek_Ancient)
+{-# NOINLINE greek_Mono #-}
 greek_Mono = unsafePerformIO (loadHyphenator Greek_Mono)
+{-# NOINLINE greek_Poly #-}
 greek_Poly = unsafePerformIO (loadHyphenator Greek_Poly)
+{-# NOINLINE gujarati #-}
 gujarati = unsafePerformIO (loadHyphenator Gujarati)
+{-# NOINLINE hindi #-}
 hindi = unsafePerformIO (loadHyphenator Hindi)
+{-# NOINLINE hungarian #-}
 hungarian = unsafePerformIO (loadHyphenator Hungarian)
+{-# NOINLINE icelandic #-}
 icelandic = unsafePerformIO (loadHyphenator Icelandic)
+{-# NOINLINE indonesian #-}
 indonesian = unsafePerformIO (loadHyphenator Indonesian)
+{-# NOINLINE interlingua #-}
 interlingua = unsafePerformIO (loadHyphenator Interlingua)
+{-# NOINLINE irish #-}
 irish = unsafePerformIO (loadHyphenator Irish)
+{-# NOINLINE italian #-}
 italian = unsafePerformIO (loadHyphenator Italian)
+{-# NOINLINE kannada #-}
 kannada = unsafePerformIO (loadHyphenator Kannada)
+{-# NOINLINE kurmanji #-}
 kurmanji = unsafePerformIO (loadHyphenator Kurmanji)
+{-# NOINLINE latin #-}
 latin = unsafePerformIO (loadHyphenator Latin)
+{-# NOINLINE latin_Classic #-}
 latin_Classic = unsafePerformIO (loadHyphenator Latin_Classic)
+{-# NOINLINE latvian #-}
 latvian = unsafePerformIO (loadHyphenator Latvian)
+{-# NOINLINE lithuanian #-}
 lithuanian = unsafePerformIO (loadHyphenator Lithuanian)
+{-# NOINLINE malayalam #-}
 malayalam = unsafePerformIO (loadHyphenator Malayalam)
+{-# NOINLINE marathi #-}
 marathi = unsafePerformIO (loadHyphenator Marathi)
+{-# NOINLINE mongolian #-}
 mongolian = unsafePerformIO (loadHyphenator Mongolian)
+{-# NOINLINE norwegian_Bokmal #-}
 norwegian_Bokmal = unsafePerformIO (loadHyphenator Norwegian_Bokmal)
+{-# NOINLINE norwegian_Nynorsk #-}
 norwegian_Nynorsk = unsafePerformIO (loadHyphenator Norwegian_Nynorsk)
+{-# NOINLINE occitan #-}
 occitan = unsafePerformIO (loadHyphenator Occitan)
+{-# NOINLINE oriya #-}
 oriya = unsafePerformIO (loadHyphenator Oriya)
+{-# NOINLINE panjabi #-}
 panjabi = unsafePerformIO (loadHyphenator Panjabi)
+{-# NOINLINE piedmontese #-}
 piedmontese = unsafePerformIO (loadHyphenator Piedmontese)
+{-# NOINLINE polish #-}
 polish = unsafePerformIO (loadHyphenator Polish)
+{-# NOINLINE portuguese #-}
 portuguese = unsafePerformIO (loadHyphenator Portuguese)
+{-# NOINLINE romanian #-}
 romanian = unsafePerformIO (loadHyphenator Romanian)
+{-# NOINLINE romansh #-}
 romansh = unsafePerformIO (loadHyphenator Romansh)
+{-# NOINLINE russian #-}
 russian = unsafePerformIO (loadHyphenator Russian)
+{-# NOINLINE sanskrit #-}
 sanskrit = unsafePerformIO (loadHyphenator Sanskrit)
+{-# NOINLINE serbian_Cyrillic #-}
 serbian_Cyrillic = unsafePerformIO (loadHyphenator Serbian_Cyrillic)
+{-# NOINLINE serbocroatian_Cyrillic #-}
 serbocroatian_Cyrillic = unsafePerformIO (loadHyphenator Serbocroatian_Cyrillic)
+{-# NOINLINE serbocroatian_Latin #-}
 serbocroatian_Latin = unsafePerformIO (loadHyphenator Serbocroatian_Latin)
+{-# NOINLINE slovak #-}
 slovak = unsafePerformIO (loadHyphenator Slovak)
+{-# NOINLINE slovenian #-}
 slovenian = unsafePerformIO (loadHyphenator Slovenian)
+{-# NOINLINE spanish #-}
 spanish = unsafePerformIO (loadHyphenator Spanish)
+{-# NOINLINE swedish #-}
 swedish = unsafePerformIO (loadHyphenator Swedish)
+{-# NOINLINE tamil #-}
 tamil = unsafePerformIO (loadHyphenator Tamil)
+{-# NOINLINE telugu #-}
 telugu = unsafePerformIO (loadHyphenator Telugu)
+{-# NOINLINE thai #-}
 thai = unsafePerformIO (loadHyphenator Thai)
+{-# NOINLINE turkish #-}
 turkish = unsafePerformIO (loadHyphenator Turkish)
+{-# NOINLINE turkmen #-}
 turkmen = unsafePerformIO (loadHyphenator Turkmen)
+{-# NOINLINE ukrainian #-}
 ukrainian = unsafePerformIO (loadHyphenator Ukrainian)
+{-# NOINLINE uppersorbian #-}
 uppersorbian = unsafePerformIO (loadHyphenator Uppersorbian)
+{-# NOINLINE welsh #-}
 welsh = unsafePerformIO (loadHyphenator Welsh)
 
 -- | Load (and cache) the hyphenator for a given language.

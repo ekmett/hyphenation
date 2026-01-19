@@ -87,3 +87,13 @@ library
   hs-source-dirs: src
   ghc-options: -Wall
   default-language: Haskell2010
+
+test-suite hyphenation-test
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Main.hs
+  build-depends:
+    base                 >= 4.9 && < 5,
+    hyphenation,
+    HUnit
+  default-language: Haskell2010

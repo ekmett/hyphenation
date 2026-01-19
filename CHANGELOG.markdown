@@ -1,3 +1,8 @@
+Unreleased
+----------
+* Add `NOINLINE` pragmas to `unsafePerformIO` hyphenator CAFs.
+* Add a small HUnit test suite.
+
 0.8.3 [2025.03.03]
 ------------------
 * Drop support for pre-8.0 versions of GHC.
