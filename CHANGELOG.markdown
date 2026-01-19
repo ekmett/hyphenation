@@ -2,6 +2,10 @@ Unreleased
 ----------
 * Add `NOINLINE` pragmas to `unsafePerformIO` hyphenator CAFs.
 * Add a small HUnit test suite.
+* Add `Text`/UTF-8 `ByteString` hyphenation APIs.
+* Add a Criterion benchmark suite.
+* Add UTF-8/ASCII exception lookup and an ASCII fast path for `ByteString` hyphenation.
+* Add `ShortText` hyphenation API.
 
 0.8.3 [2025.03.03]
 ------------------

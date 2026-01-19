@@ -14,14 +14,18 @@
 module Text.Hyphenation.Pattern
   (
   -- * Pattern file support
-    Patterns
+    Patterns(..)
   , insertPattern
   , lookupPattern
+  , lookupPatternText
+  , lookupPatternAscii
   , scorePattern
   , parsePatterns
   ) where
 
+import qualified Data.ByteString as BS
 import qualified Data.IntMap as IM
+import qualified Data.Text as T
 import Prelude hiding (lookup)
 import Data.Char (digitToInt, isDigit)
 
@@ -61,6 +65,50 @@ lookupPattern xs0 p = scores1 where
   go1 (x:xs) (Patterns ys m) = case IM.lookup (fromEnum x) m of
     Just t' -> zipMax ys (go1 xs t')
     Nothing -> ys
+
+-- | Tallies the hyphenation scores for a word considering all tails.
+lookupPatternText :: T.Text -> Patterns -> [Int]
+lookupPatternText xs0 p = scores1 where
+  scores0 =
+    case go (T.cons '.' (T.snoc xs0 '.')) p of
+      _:ys -> ys
+      [] -> error $ "lookupPatternText.scores0: Impossible"
+
+  scores1 =
+    case unsnoc scores0 of
+      Just (ys, _) -> ys
+      Nothing -> error $ "lookupPatternText.scores1: Impossible"
+
+  go t pat@(Patterns ys _) = case T.uncons t of
+    Nothing -> ys
+    Just (_, xs) -> zipMax (go1 t pat) (0 : go xs pat)
+  go1 t (Patterns ys m) = case T.uncons t of
+    Nothing -> ys
+    Just (x, xs) -> case IM.lookup (fromEnum x) m of
+      Just t' -> zipMax ys (go1 xs t')
+      Nothing -> ys
+
+-- | Tallies the hyphenation scores for an ASCII 'BS.ByteString'.
+lookupPatternAscii :: BS.ByteString -> Patterns -> [Int]
+lookupPatternAscii xs0 p = scores1 where
+  scores0 =
+    case go (BS.cons 46 (BS.snoc xs0 46)) p of
+      _:ys -> ys
+      [] -> error $ "lookupPatternAscii.scores0: Impossible"
+
+  scores1 =
+    case unsnoc scores0 of
+      Just (ys, _) -> ys
+      Nothing -> error $ "lookupPatternAscii.scores1: Impossible"
+
+  go bs (Patterns ys _) = case BS.uncons bs of
+    Nothing -> ys
+    Just (_, xs) -> zipMax (go1 bs p) (0 : go xs p)
+  go1 bs (Patterns ys m) = case BS.uncons bs of
+    Nothing -> ys
+    Just (x, xs) -> case IM.lookup (fromIntegral x) m of
+      Just t' -> zipMax ys (go1 xs t')
+      Nothing -> ys
 
 -- | Insert a Knuth-Liang hyphenation pattern into the trie
 --
